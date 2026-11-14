@@ -342,6 +342,32 @@ class IngestionPipeline:
         self.txt_parser = TextEHRParser()
         self.last_stats: IngestionStats = IngestionStats()
 
+    def parse_file(self, file_path: Union[str, Path]) -> List[CanonicalPatient]:
+        """Parses a single file based on its extension."""
+        path = Path(file_path)
+        ext = path.suffix.lower()
+        if ext == ".json":
+            return self.json_parser.parse(path)
+        elif ext == ".csv":
+            return self.csv_parser.parse(path)
+        elif ext in [".txt", ".text"]:
+            return self.txt_parser.parse(path)
+        else:
+            raise ValueError(f"Unsupported file format: {ext}")
+
+    def parse_content(self, filename: str, content: str) -> List[CanonicalPatient]:
+        """Parses in-memory content based on filename extension."""
+        import tempfile
+        ext = Path(filename).suffix.lower()
+        with tempfile.NamedTemporaryFile("w+", suffix=ext, delete=False, encoding="utf-8") as tmp:
+            tmp.write(content)
+            tmp_path = Path(tmp.name)
+        try:
+            return self.parse_file(tmp_path)
+        finally:
+            if tmp_path.exists():
+                tmp_path.unlink()
+
     def ingest_directory_with_stats(self, dir_path: Union[str, Path]) -> tuple[List[CanonicalPatient], IngestionStats]:
         """Scan directory, ingest files, track telemetry and deduplicate records."""
         path = Path(dir_path)

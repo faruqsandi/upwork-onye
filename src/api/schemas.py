@@ -30,7 +30,7 @@ class PatientDetailResponse(BaseModel):
 
 
 class IngestionStatusResponse(BaseModel):
-    status: str
+    status: str = "success"
     total_ingested: int = 0
     successful: int = 0
     failed: int = 0
@@ -39,6 +39,18 @@ class IngestionStatusResponse(BaseModel):
     bundles_stored: int = 0
     vectors_indexed: int = 0
     files_uploaded: Optional[int] = None
-    message: str
+    message: str = "Ready"
     failures: List[str] = []
+
+    # Queue telemetry fields
+    unprocessed: int = 0
+    in_processing: int = 0
+    is_active: bool = False
+    progress_percent: float = 0.0
+    current_file: Optional[str] = None
+
+    # Active batch telemetry fields
+    batch_total: int = 0
+    batch_done: int = 0
+    batch_remaining: int = 0
 

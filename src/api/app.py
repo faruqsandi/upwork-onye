@@ -1,20 +1,33 @@
 """FastAPI Application Entrypoint."""
 
+from contextlib import asynccontextmanager
 from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+from src.queue.worker import get_queue_worker
 from .routes import router
 
 STATIC_DIR = Path(__file__).resolve().parent.parent / "static"
 STATIC_DIR.mkdir(parents=True, exist_ok=True)
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Initialize and start background queue worker for progressive processing
+    worker = get_queue_worker()
+    worker.start()
+    yield
+    worker.stop()
+
+
 app = FastAPI(
     title="EHR Media Intelligence Platform API",
     description="Clinical EHR ingestion, HL7 FHIR R4 normalization, AI summarization, and sub-second semantic vector search.",
     version="1.0.0",
+    lifespan=lifespan,
 )
 
 # Enable CORS for local client development
