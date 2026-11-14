@@ -2,6 +2,7 @@
 
 import tempfile
 import time
+import uuid
 from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
@@ -22,7 +23,11 @@ from src.search.vector_store import ClinicalVectorStore
 def populated_vector_store():
     """Initializes in-memory vector store with 50+ records to benchmark latency and quality."""
     with tempfile.TemporaryDirectory() as tmpdir:
-        vstore = ClinicalVectorStore(persist_dir=Path(tmpdir) / "chroma_bench", in_memory=True)
+        vstore = ClinicalVectorStore(
+            persist_dir=Path(tmpdir) / "chroma_bench",
+            in_memory=True,
+            collection_name=f"test_bench_{uuid.uuid4().hex[:8]}",
+        )
 
         # Base clinical patients
         p1 = CanonicalPatient(

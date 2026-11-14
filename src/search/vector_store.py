@@ -16,7 +16,12 @@ from .models import SearchRequest, SearchResponse, SearchResultItem
 class ClinicalVectorStore:
     """Manages indexing and semantic retrieval of EHR clinical media and AI summaries."""
 
-    def __init__(self, persist_dir: Optional[Path] = None, in_memory: bool = False):
+    def __init__(
+        self,
+        persist_dir: Optional[Path] = None,
+        in_memory: bool = False,
+        collection_name: str = "clinical_records",
+    ):
         self.embedding_engine = EmbeddingEngine()
 
         if in_memory:
@@ -27,7 +32,7 @@ class ClinicalVectorStore:
             self.client = chromadb.PersistentClient(path=str(persist_path))
 
         self.collection = self.client.get_or_create_collection(
-            name="clinical_records",
+            name=collection_name,
             metadata={"hnsw:space": "cosine"},
         )
 

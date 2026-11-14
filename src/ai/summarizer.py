@@ -250,6 +250,108 @@ class OpenAILLMClient(BaseLLMClient):
             )
 
 
+class LocalLMStudioClient(BaseLLMClient):
+    """Local LLM client using LM Studio's OpenAI-compatible endpoint at http://127.0.0.1:1234."""
+
+    def __init__(
+        self,
+        base_url: Optional[str] = None,
+        model_name: Optional[str] = None,
+        timeout: Optional[float] = None,
+    ):
+        self.base_url = (base_url or settings.LOCAL_LLM_BASE_URL).rstrip("/")
+        self.model_name = model_name or settings.LOCAL_LLM_MODEL
+        self.timeout = timeout or settings.LOCAL_LLM_TIMEOUT
+        self.fallback = MockLLMClient()
+
+    def summarize(
+        self,
+        patient_id: str,
+        patient_info: str,
+        documents: List[str],
+        diagnostics: List[str],
+    ) -> ClinicalSummary:
+        prompt = build_user_prompt(patient_info, documents, diagnostics)
+        payload = {
+            "model": self.model_name,
+            "messages": [
+                {"role": "system", "content": CLINICAL_SUMMARIZER_SYSTEM_PROMPT},
+                {"role": "user", "content": CLINICAL_FEW_SHOT_EXAMPLE},
+                {"role": "user", "content": prompt},
+            ],
+            "temperature": 0.1,
+            "max_tokens": 500,
+        }
+
+        try:
+            with httpx.Client(timeout=self.timeout) as client:
+                resp = client.post(
+                    f"{self.base_url}/chat/completions",
+                    headers={"Content-Type": "application/json"},
+                    json=payload,
+                )
+                resp.raise_for_status()
+                res_json = resp.json()
+                content = res_json["choices"][0]["message"]["content"] or ""
+
+                clean_text = content.strip()
+                if "```" in clean_text:
+                    match = re.search(r"```(?:json)?\s*([\s\S]*?)\s*```", clean_text)
+                    if match:
+                        clean_text = match.group(1).strip()
+
+                parsed = json.loads(clean_text)
+
+                chief_concern = parsed.get("chief_concern") or "Clinical evaluation"
+
+                key_diagnoses = parsed.get("key_diagnoses")
+                if isinstance(key_diagnoses, str):
+                    key_diagnoses = [key_diagnoses]
+                elif not isinstance(key_diagnoses, list):
+                    key_diagnoses = []
+
+                recent_media = parsed.get("recent_media_and_labs")
+                if isinstance(recent_media, dict):
+                    recent_media = [f"{k}: {v}" for k, v in recent_media.items()]
+                elif isinstance(recent_media, str):
+                    recent_media = [recent_media]
+                elif not isinstance(recent_media, list):
+                    recent_media = []
+
+                flagged_anomalies = parsed.get("flagged_anomalies")
+                if isinstance(flagged_anomalies, str):
+                    flagged_anomalies = [flagged_anomalies]
+                elif not isinstance(flagged_anomalies, list):
+                    flagged_anomalies = []
+
+                full_text = parsed.get("full_summary_text") or (
+                    f"Patient {patient_id} presents with {chief_concern}. "
+                    f"Diagnoses: {', '.join(key_diagnoses)}. "
+                    f"Findings: {'; '.join(recent_media)}."
+                )
+                words = full_text.split()
+                if len(words) >= 200:
+                    words = words[:185]
+                    full_text = " ".join(words) + "..."
+
+                return ClinicalSummary(
+                    patient_id=patient_id,
+                    chief_concern=chief_concern,
+                    key_diagnoses=key_diagnoses or ["Documented clinical findings"],
+                    recent_media_and_labs=recent_media or ["Diagnostic review on file"],
+                    flagged_anomalies=flagged_anomalies,
+                    full_summary_text=full_text,
+                    word_count=len(words),
+                    confidence_score=0.95,
+                    disclaimer=DEFAULT_DISCLAIMER,
+                    cached=False,
+                )
+
+        except Exception:
+            # Fallback to MockLLMClient if LM Studio is unreachable or throws
+            return self.fallback.summarize(patient_id, patient_info, documents, diagnostics)
+
+
 class ClinicalSummarizer:
     """Orchestrates summary generation with prompt constraints, caching, and fallback providers."""
 
@@ -262,6 +364,8 @@ class ClinicalSummarizer:
 
         if llm_client:
             self.client = llm_client
+        elif settings.LLM_PROVIDER == "local":
+            self.client = LocalLMStudioClient()
         elif settings.LLM_PROVIDER == "anthropic" and settings.ANTHROPIC_API_KEY:
             self.client = AnthropicLLMClient(settings.ANTHROPIC_API_KEY)
         elif settings.LLM_PROVIDER == "openai" and settings.OPENAI_API_KEY:

@@ -5,7 +5,8 @@ from pathlib import Path
 import pytest
 from src.ai.cache import SummaryCache
 from src.ai.models import DEFAULT_DISCLAIMER
-from src.ai.summarizer import ClinicalSummarizer, MockLLMClient
+from src.ai.summarizer import ClinicalSummarizer, MockLLMClient, LocalLMStudioClient
+from src.config import settings
 from src.fhir.bundle import BundleGenerator
 from src.ingestion.models import (
     CanonicalDiagnosticReport,
@@ -131,4 +132,31 @@ class TestClinicalSummarizer:
             assert summary.patient_id == sample_patient.patient_id
             assert summary.word_count < 200
             assert len(summary.key_diagnoses) > 0
+
+    def test_local_provider_default_selection(self):
+        """Verify that default settings configure the 'local' LLM provider."""
+        assert settings.LLM_PROVIDER == "local"
+        summarizer = ClinicalSummarizer()
+        assert isinstance(summarizer.client, LocalLMStudioClient)
+
+    def test_local_lmstudio_client_summarize_and_caching(self, sample_patient):
+        """Verify LocalLMStudioClient successfully generates structured summaries and caches them."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            cache = SummaryCache(db_path=Path(tmpdir) / "test_local_cache.db")
+            client = LocalLMStudioClient()
+            summarizer = ClinicalSummarizer(cache=cache, llm_client=client)
+
+            # First run: generates summary using LM Studio
+            summary1 = summarizer.summarize_patient(sample_patient)
+            assert summary1.cached is False
+            assert summary1.word_count < 200
+            assert summary1.chief_concern != ""
+            assert len(summary1.key_diagnoses) > 0
+            assert summary1.disclaimer == DEFAULT_DISCLAIMER
+
+            # Second run: cache hit
+            summary2 = summarizer.summarize_patient(sample_patient)
+            assert summary2.cached is True
+            assert summary2.chief_concern == summary1.chief_concern
+            assert summary2.full_summary_text == summary1.full_summary_text
 

@@ -22,7 +22,10 @@ class Settings(BaseSettings):
     EMBEDDING_MODEL_NAME: str = "all-MiniLM-L6-v2"
 
     # LLM Settings
-    LLM_PROVIDER: str = "mock"  # mock, anthropic, openai
+    LLM_PROVIDER: str = "local"  # local, mock, anthropic, openai
+    LOCAL_LLM_BASE_URL: str = "http://127.0.0.1:1234/v1"
+    LOCAL_LLM_MODEL: str = "llama-3.2-1b-instruct"
+    LOCAL_LLM_TIMEOUT: float = 30.0
     ANTHROPIC_API_KEY: str | None = None
     OPENAI_API_KEY: str | None = None
 
