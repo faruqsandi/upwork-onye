@@ -39,3 +39,4 @@ def serve_index():
     if index_file.exists():
         return FileResponse(index_file)
     return {"message": "EHR Media Intelligence API running. Frontend static files will appear here."}
+

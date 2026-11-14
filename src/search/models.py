@@ -38,3 +38,4 @@ class SearchResponse(BaseModel):
     total_matches: int
     execution_time_ms: float
     results: List[SearchResultItem]
+

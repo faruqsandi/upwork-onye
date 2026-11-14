@@ -35,3 +35,4 @@ class IngestionStatusResponse(BaseModel):
     bundles_stored: int
     vectors_indexed: int
     message: str
+

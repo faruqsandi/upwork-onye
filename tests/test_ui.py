@@ -45,3 +45,4 @@ class TestFrontendDashboard:
         bundle = bundle_resp.json()
         assert bundle.get("resourceType") == "Bundle"
         assert len(bundle.get("entry", [])) >= 1
+
