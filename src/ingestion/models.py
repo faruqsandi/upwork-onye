@@ -78,3 +78,14 @@ class CanonicalPatient(BaseModel):
     def full_name(self) -> str:
         return f"{self.first_name} {self.last_name}".strip()
 
+
+class IngestionStats(BaseModel):
+    """Execution telemetry and data quality counters for the ingestion pipeline."""
+
+    total_ingested: int = 0
+    successful: int = 0
+    failed: int = 0
+    skipped_duplicates: int = 0
+    failures: List[str] = Field(default_factory=list)
+
+

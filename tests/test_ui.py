@@ -15,8 +15,26 @@ class TestFrontendDashboard:
         assert "search-input" in resp.text
         assert "drop-zone" in resp.text
         assert "Re-ingest data from directory" in resp.text
+        assert "anonymize-container" in resp.text
+        assert "toggle-anonymize" in resp.text
+        assert "ingestion-stats-panel" in resp.text
+        assert "stat-total" in resp.text
+        assert "stat-successful" in resp.text
+        assert "stat-failed" in resp.text
+        assert "stat-duplicates" in resp.text
         assert "SLA &lt;2000ms" not in resp.text
         assert "SLA <2000ms" not in resp.text
+
+    def test_ingest_telemetry_endpoint(self):
+        resp = client.post("/ingest")
+        assert resp.status_code == 200
+        data = resp.json()
+        assert "total_ingested" in data
+        assert "successful" in data
+        assert "failed" in data
+        assert "skipped_duplicates" in data
+        assert data["total_ingested"] >= data["successful"]
+        assert data["successful"] >= 10
 
     def test_upload_endpoint_with_single_record_files(self):
         from pathlib import Path

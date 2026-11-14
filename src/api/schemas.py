@@ -31,9 +31,14 @@ class PatientDetailResponse(BaseModel):
 
 class IngestionStatusResponse(BaseModel):
     status: str
-    patients_processed: int
-    bundles_stored: int
-    vectors_indexed: int
+    total_ingested: int = 0
+    successful: int = 0
+    failed: int = 0
+    skipped_duplicates: int = 0
+    patients_processed: int = 0
+    bundles_stored: int = 0
+    vectors_indexed: int = 0
     files_uploaded: Optional[int] = None
     message: str
+    failures: List[str] = []
 

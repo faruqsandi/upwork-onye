@@ -130,7 +130,7 @@ def run_ingestion() -> IngestionStatusResponse:
     persists to SQLite, generates clinical summaries, and builds vector search index.
     """
     data_dir = get_default_data_dir()
-    patients = pipeline.ingest_directory(data_dir)
+    patients, stats = pipeline.ingest_directory_with_stats(data_dir)
 
     indexed_count = 0
     bundles_count = 0
@@ -148,10 +148,15 @@ def run_ingestion() -> IngestionStatusResponse:
 
     return IngestionStatusResponse(
         status="success",
+        total_ingested=stats.total_ingested,
+        successful=stats.successful,
+        failed=stats.failed,
+        skipped_duplicates=stats.skipped_duplicates,
         patients_processed=len(patients),
         bundles_stored=bundles_count,
         vectors_indexed=indexed_count,
-        message=f"Successfully ingested {len(patients)} patient records from {data_dir.name}/.",
+        failures=stats.failures,
+        message=f"Ingestion complete: {stats.successful} successful, {stats.failed} failed, {stats.skipped_duplicates} duplicate(s) skipped.",
     )
 
 
@@ -165,19 +170,30 @@ async def upload_and_ingest(files: List[UploadFile] = File(...)) -> IngestionSta
     data_dir.mkdir(parents=True, exist_ok=True)
 
     saved_count = 0
+    upload_errors: List[str] = []
     for file in files:
         if not file.filename:
             continue
         safe_filename = Path(file.filename).name
         dest = data_dir / safe_filename
-        content = await file.read()
-        with open(dest, "wb") as f:
-            f.write(content)
-        saved_count += 1
+        try:
+            content = await file.read()
+            with open(dest, "wb") as f:
+                f.write(content)
+            saved_count += 1
+        except Exception as e:
+            upload_errors.append(f"{safe_filename}: {str(e)}")
 
     result = run_ingestion()
     result.files_uploaded = saved_count
-    result.message = f"Uploaded {saved_count} file(s) and re-ingested repository ({result.patients_processed} total patients)."
+    if upload_errors:
+        result.failures.extend(upload_errors)
+        result.failed += len(upload_errors)
+
+    result.message = (
+        f"Uploaded {saved_count} file(s). Ingested: {result.total_ingested} total, "
+        f"{result.successful} successful, {result.failed} failed, {result.skipped_duplicates} duplicate(s) skipped."
+    )
     return result
 
 
