@@ -23,3 +23,4 @@ class ClinicalSummary(BaseModel):
     confidence_score: float = Field(default=0.95, ge=0.0, le=1.0)
     disclaimer: str = DEFAULT_DISCLAIMER
     cached: bool = False
+

@@ -190,3 +190,4 @@ class TestIngestionPipelineEndToEnd:
             assert p.mrn.startswith("MRN:")
             assert p.gender in [GenderEnum.MALE, GenderEnum.FEMALE, GenderEnum.OTHER, GenderEnum.UNKNOWN]
             assert "-" in p.birth_date
+

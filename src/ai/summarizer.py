@@ -340,3 +340,4 @@ class ClinicalSummarizer:
 
         self.cache.set(patient_id, rec_hash, summary)
         return summary
+

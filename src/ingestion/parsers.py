@@ -357,3 +357,4 @@ class IngestionPipeline:
         # Consolidate and deduplicate records by normalized MRN
         consolidated = DataCleaner.deduplicate_and_merge(all_patients)
         return consolidated
+

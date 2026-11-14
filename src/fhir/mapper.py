@@ -189,3 +189,4 @@ class FHIRMapper:
         resources.extend(diag_resources)
 
         return resources
+

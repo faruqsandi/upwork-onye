@@ -40,3 +40,4 @@ class BundleGenerator:
         # Run validation
         report = FHIRValidator.validate_bundle(bundle, patient_id=canonical.patient_id)
         return bundle, report
+

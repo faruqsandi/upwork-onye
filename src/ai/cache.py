@@ -82,3 +82,4 @@ class SummaryCache:
         with self._get_connection() as conn:
             conn.execute("DELETE FROM summary_cache;")
             conn.commit()
+

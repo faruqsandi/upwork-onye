@@ -131,3 +131,4 @@ class TestClinicalSummarizer:
             assert summary.patient_id == sample_patient.patient_id
             assert summary.word_count < 200
             assert len(summary.key_diagnoses) > 0
+

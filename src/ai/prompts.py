@@ -48,3 +48,4 @@ DIAGNOSTIC & LAB REPORTS:
 
 Generate the structured JSON summary now conforming to all rules (strictly under 200 words total).
 """
+
