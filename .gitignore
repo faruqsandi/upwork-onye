@@ -34,8 +34,17 @@ ENV/
 *.sqlite
 *.sqlite3
 *.db
+*-wal
+*-shm
 .chroma/
 chroma_data/
+!ehr_intelligence.db
+!chroma_data/
+!chroma_data/**
+chroma_data/*-wal
+chroma_data/*-shm
+chroma_data/*.sqlite3-wal
+chroma_data/*.sqlite3-shm
 
 # IDE / Editor
 .vscode/

@@ -185,3 +185,26 @@ class TestIngestionPipelineEndToEnd:
             assert p.gender in [GenderEnum.MALE, GenderEnum.FEMALE, GenderEnum.OTHER, GenderEnum.UNKNOWN]
             assert "-" in p.birth_date
 
+    def test_ingest_sample_unprocessed_records(self):
+        """Tests ingestion pipeline using 10 sample files from the 50 unprocessed records."""
+        unprocessed_dir = Path(__file__).resolve().parent.parent / "data" / "unprocessed"
+        assert unprocessed_dir.exists()
+        all_unprocessed = sorted([f for f in unprocessed_dir.iterdir() if f.is_file() and not f.name.startswith(".")])
+        assert len(all_unprocessed) == 50
+
+        # Sample 10 files across formats
+        sample_files = all_unprocessed[:10]
+        assert len(sample_files) == 10
+
+        pipeline = IngestionPipeline()
+        ingested_patients = []
+        for file_path in sample_files:
+            patients = pipeline.parse_file(file_path)
+            assert len(patients) >= 1
+            ingested_patients.extend(patients)
+
+        assert len(ingested_patients) >= 10
+        for p in ingested_patients:
+            assert p.mrn.startswith("MRN:")
+            assert p.patient_id.startswith("P-")
+

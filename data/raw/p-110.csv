@@ -1,2 +1,0 @@
-Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
-MRN-000110,William 'Bill' Hayes,1951-11-14,cis-male,ENC-110-1,AMB,2023-08-25,Orthopedic Clinic Note,72-year-old male with severe tricompartmental osteoarthritis of right knee. Radiographs reveal bone-on-bone medial compartment joint space narrowing with subchondral sclerosis and osteophyte formation. Scheduled for right total knee arthroplasty.
