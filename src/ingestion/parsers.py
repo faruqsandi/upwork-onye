@@ -16,6 +16,7 @@ from .models import (
     CanonicalPatient,
     EncounterClassEnum,
     GenderEnum,
+    IngestionStats,
 )
 
 
@@ -339,30 +340,54 @@ class IngestionPipeline:
         self.json_parser = JSONEHRParser()
         self.csv_parser = CSVEHRParser()
         self.txt_parser = TextEHRParser()
+        self.last_stats: IngestionStats = IngestionStats()
+
+    def ingest_directory_with_stats(self, dir_path: Union[str, Path]) -> tuple[List[CanonicalPatient], IngestionStats]:
+        """Scan directory, ingest files, track telemetry and deduplicate records."""
+        path = Path(dir_path)
+        stats = IngestionStats()
+        if not path.is_dir():
+            self.last_stats = stats
+            return [], stats
+
+        all_patients: List[CanonicalPatient] = []
+        files = [f for f in sorted(path.iterdir()) if f.is_file() and not f.name.startswith(".")]
+        stats.total_ingested = len(files)
+
+        for file_path in files:
+            ext = file_path.suffix.lower()
+            if ext not in [".json", ".csv", ".txt", ".text"]:
+                continue
+            try:
+                if ext == ".json":
+                    parsed = self.json_parser.parse(file_path)
+                elif ext == ".csv":
+                    parsed = self.csv_parser.parse(file_path)
+                elif ext in [".txt", ".text"]:
+                    parsed = self.txt_parser.parse(file_path)
+                else:
+                    parsed = []
+
+                if not parsed:
+                    stats.failed += 1
+                    stats.failures.append(f"{file_path.name}: Empty or unsupported format")
+                else:
+                    all_patients.extend(parsed)
+            except Exception as e:
+                stats.failed += 1
+                stats.failures.append(f"{file_path.name}: {str(e)}")
+
+        raw_count = len(all_patients)
+        unique_patients = DataCleaner.deduplicate_and_merge(all_patients)
+        stats.skipped_duplicates = raw_count - len(unique_patients)
+        stats.successful = len(unique_patients)
+        self.last_stats = stats
+        return unique_patients, stats
 
     def ingest_directory(self, dir_path: Union[str, Path]) -> List[CanonicalPatient]:
         """Scan directory and ingest all individual or batch JSON, CSV, and TXT files."""
-        path = Path(dir_path)
-        if not path.is_dir():
-            return []
-
-        all_patients: List[CanonicalPatient] = []
-        for file_path in sorted(path.iterdir()):
-            if not file_path.is_file():
-                continue
-            ext = file_path.suffix.lower()
-            try:
-                if ext == ".json":
-                    all_patients.extend(self.json_parser.parse(file_path))
-                elif ext == ".csv":
-                    all_patients.extend(self.csv_parser.parse(file_path))
-                elif ext in [".txt", ".text"]:
-                    all_patients.extend(self.txt_parser.parse(file_path))
-            except Exception as e:
-                # Log and continue with remaining files
-                print(f"Skipping corrupted file {file_path.name}: {e}")
-
-        return DataCleaner.deduplicate_and_merge(all_patients)
+        patients, _ = self.ingest_directory_with_stats(dir_path)
+        return patients
 
     def ingest_sources(
         self,
