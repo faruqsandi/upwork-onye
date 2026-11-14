@@ -34,5 +34,6 @@ class IngestionStatusResponse(BaseModel):
     patients_processed: int
     bundles_stored: int
     vectors_indexed: int
+    files_uploaded: Optional[int] = None
     message: str
 

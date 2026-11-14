@@ -40,9 +40,92 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Setup drag and drop on drop-zone
+  const dropZone = document.getElementById("drop-zone");
+  if (dropZone) {
+    ["dragenter", "dragover"].forEach((eventName) => {
+      dropZone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.add("drag-active");
+      });
+    });
+
+    ["dragleave", "drop"].forEach((eventName) => {
+      dropZone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.remove("drag-active");
+      });
+    });
+
+    dropZone.addEventListener("drop", (e) => {
+      const dt = e.dataTransfer;
+      if (dt && dt.files && dt.files.length > 0) {
+        uploadFiles(dt.files);
+      }
+    });
+  }
+
   // Default query on first load to immediately showcase capabilities
   setQuery("uncontrolled diabetes with elevated HbA1c and peripheral neuropathy");
 });
+
+function handleFileInput(event) {
+  const files = event.target.files;
+  if (files && files.length > 0) {
+    uploadFiles(files);
+  }
+}
+
+async function uploadFiles(fileList) {
+  const formData = new FormData();
+  let count = 0;
+  for (let i = 0; i < fileList.length; i++) {
+    const file = fileList[i];
+    const ext = file.name.split(".").pop().toLowerCase();
+    if (["json", "csv", "txt"].includes(ext)) {
+      formData.append("files", file);
+      count++;
+    }
+  }
+
+  if (count === 0) {
+    showToast("Please select valid EHR files (.json, .csv, .txt).");
+    return;
+  }
+
+  const uploadStatus = document.getElementById("upload-status");
+  if (uploadStatus) {
+    uploadStatus.innerText = `Uploading ${count} file(s)...`;
+    uploadStatus.classList.remove("hidden");
+  }
+
+  showToast(`Uploading ${count} clinical file(s) for ingestion...`);
+
+  try {
+    const resp = await fetch("/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!resp.ok) {
+      throw new Error(`Upload failed with HTTP ${resp.status}`);
+    }
+
+    const res = await resp.json();
+    showToast(`Successfully ingested ${res.files_uploaded} file(s) (${res.patients_processed} patients normalized).`);
+    executeSearch();
+  } catch (err) {
+    showToast(`Upload error: ${err.message}`);
+  } finally {
+    if (uploadStatus) {
+      uploadStatus.classList.add("hidden");
+    }
+    const input = document.getElementById("file-upload-input");
+    if (input) input.value = "";
+  }
+}
 
 function setQuery(text) {
   const input = document.getElementById("search-input");
@@ -108,8 +191,8 @@ async function executeSearch() {
     const data = await resp.json();
     loading.classList.add("hidden");
 
-    // Latency badge & SLA audit
-    latencyBadge.innerText = `${data.execution_time_ms} ms (SLA <2000ms)`;
+    // Latency badge
+    latencyBadge.innerText = `${data.execution_time_ms} ms`;
     latencyBadge.classList.remove("hidden");
 
     if (!data.results || data.results.length === 0) {
@@ -165,7 +248,7 @@ async function executeSearch() {
           <div>
             <h4 class="text-xs font-bold text-slate-800">${escapeHtml(item.title)}</h4>
             <p class="text-xs text-slate-600 mt-1 leading-relaxed bg-slate-50/80 p-2 rounded border border-slate-100">
-              <span class="font-semibold text-indigo-700">AI Summary:</span> ${escapeHtml(item.summary_snippet)}
+              <span class="font-semibold text-indigo-700">Clinical Summary:</span> ${escapeHtml(item.summary_snippet)}
             </p>
           </div>
 
@@ -177,7 +260,7 @@ async function executeSearch() {
           <div class="flex items-center justify-between pt-1 border-t border-slate-100 text-[11px]">
             <span class="text-slate-400">Click card or press Enter to inspect full patient file</span>
             <span class="text-indigo-600 font-semibold flex items-center hover:text-indigo-800">
-              Open Patient Dossier &rarr;
+              View Patient Record &rarr;
             </span>
           </div>
         </article>
@@ -205,7 +288,7 @@ async function openPatientDrawer(patientId) {
   document.getElementById("drawer-patient-name").innerText = "Loading...";
   document.getElementById("drawer-mrn-badge").innerText = "";
   document.getElementById("drawer-demographics").innerText = "";
-  document.getElementById("drawer-chief-concern").innerText = "Synthesizing...";
+  document.getElementById("drawer-chief-concern").innerText = "Loading clinical summary...";
   document.getElementById("drawer-diagnoses-list").innerHTML = "";
   document.getElementById("drawer-anomalies-list").innerHTML = "";
   document.getElementById("drawer-full-narrative").innerText = "";

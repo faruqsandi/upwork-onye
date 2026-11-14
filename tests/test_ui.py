@@ -13,6 +13,27 @@ class TestFrontendDashboard:
         assert "EHR Media Intelligence" in resp.text
         assert "Tailwind CSS" in resp.text or "tailwindcss" in resp.text
         assert "search-input" in resp.text
+        assert "drop-zone" in resp.text
+        assert "Re-ingest data from directory" in resp.text
+        assert "SLA &lt;2000ms" not in resp.text
+        assert "SLA <2000ms" not in resp.text
+
+    def test_upload_endpoint_with_single_record_files(self):
+        from pathlib import Path
+        test_file = Path("data/raw/patient_test.json")
+        try:
+            json_content = b'{"patient_id": "P-TEST-UP", "first_name": "Upload", "last_name": "Test", "dob": "1990-05-15", "gender": "Female", "mrn": "MRN-TEST-99"}'
+            files = [
+                ("files", ("patient_test.json", json_content, "application/json")),
+            ]
+            resp = client.post("/upload", files=files)
+            assert resp.status_code == 200
+            data = resp.json()
+            assert data["files_uploaded"] == 1
+            assert data["patients_processed"] >= 1
+        finally:
+            if test_file.exists():
+                test_file.unlink()
 
     def test_static_assets_served(self):
         resp_css = client.get("/static/css/style.css")

@@ -50,7 +50,7 @@
               HL7 FHIR R4
             </span>
           </div>
-          <p class="text-xs text-slate-500">Clinical Ingestion · Normalization · AI Summarization · Sub-Second Search</p>
+          <p class="text-xs text-slate-500">Clinical Data Ingestion · HL7 FHIR Normalization · Clinical Summarization · Semantic Search</p>
         </div>
       </div>
 
@@ -63,7 +63,7 @@
           <svg id="ingest-icon" class="-ml-0.5 mr-1.5 h-4 w-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
           </svg>
-          Re-sync EHR Pipeline
+          Re-ingest data from directory
         </button>
         <span class="h-4 w-px bg-slate-200" aria-hidden="true"></span>
         <a href="/docs" target="_blank" class="text-xs text-indigo-600 hover:text-indigo-800 font-medium">FastAPI Docs &rarr;</a>
@@ -72,14 +72,51 @@
   </header>
 
   <!-- Main Search Container -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col space-y-6">
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col space-y-6">
+
+    <!-- Ingestion & Drag/Drop Area -->
+    <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 transition-all">
+      <div
+        id="drop-zone"
+        onclick="document.getElementById('file-upload-input').click()"
+        class="border-2 border-dashed border-slate-300 hover:border-indigo-400 rounded-lg p-4 text-center cursor-pointer bg-slate-50/50 hover:bg-indigo-50/30 transition-all flex flex-col sm:flex-row items-center justify-between gap-3"
+      >
+        <div class="flex items-center space-x-3 text-left">
+          <div class="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0 border border-indigo-100">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+            </svg>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-slate-800">
+              Drag &amp; drop clinical records here, or <span class="text-indigo-600 underline">browse files</span>
+            </p>
+            <p class="text-[11px] text-slate-500">Supports single-record or batch JSON, CSV, and clinical text notes (.txt)</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span id="upload-status" class="text-xs font-medium text-slate-600 hidden"></span>
+          <span class="text-[11px] font-medium px-2 py-1 bg-slate-100 text-slate-600 rounded border border-slate-200">
+            JSON · CSV · TXT
+          </span>
+        </div>
+        <input
+          type="file"
+          id="file-upload-input"
+          multiple
+          accept=".json,.csv,.txt"
+          class="hidden"
+          onchange="handleFileInput(event)"
+        />
+      </div>
+    </section>
 
     <!-- Search Box Card -->
     <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 transition-all" aria-label="Clinical Semantic Search">
       <div class="space-y-4">
         <label for="search-input" class="block text-sm font-semibold text-slate-900">
-          Natural Language Clinical Query
-          <span class="text-xs font-normal text-slate-500 ml-2">(searches unstructured notes, pathology, imaging conclusions & AI summaries)</span>
+          Clinical Semantic Search
+          <span class="text-xs font-normal text-slate-500 ml-2">(searches clinical documentation, pathology reports, diagnostic studies &amp; clinical summaries)</span>
         </label>
         
         <div class="relative rounded-lg shadow-sm">
@@ -110,7 +147,7 @@
 
         <!-- Suggestion Chips -->
         <div class="flex flex-wrap items-center gap-2 pt-1 text-xs">
-          <span class="text-slate-500 font-medium">Quick Prompts:</span>
+          <span class="text-slate-500 font-medium">Clinical Examples:</span>
           <button onclick="setQuery('uncontrolled diabetes with elevated HbA1c and peripheral neuropathy')" class="chip">Diabetic Neuropathy & HbA1c</button>
           <button onclick="setQuery('acute crushing chest pain with anterior STEMI and elevated troponin')" class="chip">Acute STEMI & Troponin</button>
           <button onclick="setQuery('bacterial lobar pneumonia with right lower lobe consolidation')" class="chip">Pneumonia Consolidation</button>
@@ -181,9 +218,9 @@
         <svg class="mx-auto h-12 w-12 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
-        <h3 class="mt-3 text-sm font-semibold text-slate-900">Clinician Search Ready</h3>
+        <h3 class="mt-3 text-sm font-semibold text-slate-900">Clinical Chart Search</h3>
         <p class="mt-1 text-xs text-slate-500 max-w-sm mx-auto">
-          Enter clinical symptoms, diagnoses, or lab panels above to query all normalized patient records with sub-second vector search.
+          Query patient records by entering clinical symptoms, diagnoses, or lab panels above.
         </p>
       </div>
 
@@ -239,12 +276,12 @@
         <!-- Drawer Body -->
         <div class="flex-1 overflow-y-auto p-6 space-y-6">
 
-          <!-- AI Clinical Summary Card -->
+          <!-- Structured Clinical Summary Card -->
           <div class="bg-indigo-50/60 rounded-xl border border-indigo-100 p-5 space-y-4">
             <div class="flex items-center justify-between">
               <div class="flex items-center space-x-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-indigo-600 animate-ping"></span>
-                <h3 class="text-sm font-bold text-indigo-950 uppercase tracking-wide">AI Structured Clinical Summary</h3>
+                <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
+                <h3 class="text-sm font-bold text-indigo-950 uppercase tracking-wide">Structured Clinical Summary</h3>
               </div>
               <span id="drawer-confidence-badge" class="px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-100 text-indigo-800">
                 Confidence: 95%
@@ -276,7 +313,7 @@
 
             <!-- Full Narrative Synthesis -->
             <div>
-              <span class="text-xs font-semibold text-indigo-900 uppercase">Narrative Synthesis (<200 words):</span>
+              <span class="text-xs font-semibold text-indigo-900 uppercase">Clinical Narrative Synthesis:</span>
               <p id="drawer-full-narrative" class="text-xs text-slate-700 leading-relaxed mt-1 bg-white p-3 rounded border border-indigo-100"></p>
             </div>
 

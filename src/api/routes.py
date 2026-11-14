@@ -2,7 +2,7 @@
 
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-from fastapi import APIRouter, HTTPException, Query, status
+from fastapi import APIRouter, File, HTTPException, Query, UploadFile, status
 from fastapi.responses import JSONResponse, Response
 
 from src.ai.summarizer import ClinicalSummarizer
@@ -125,20 +125,12 @@ def get_fhir_bundle(patient_id: str):
 
 @router.post("/ingest", response_model=IngestionStatusResponse, summary="Trigger Data Ingestion Pipeline")
 def run_ingestion() -> IngestionStatusResponse:
-    """Runs ingestion across raw JSON, CSV, and text EHR sources, normalizes to FHIR R4,
+    """Runs ingestion across raw JSON, CSV, and text EHR directory files, normalizes to FHIR R4,
 
-    persists to SQLite, generates AI summaries, and builds vector search index.
+    persists to SQLite, generates clinical summaries, and builds vector search index.
     """
     data_dir = get_default_data_dir()
-    json_path = data_dir / "simulated_ehr_export.json"
-    csv_path = data_dir / "scanned_notes.csv"
-    txt_path = data_dir / "lab_results.txt"
-
-    patients = pipeline.ingest_sources(
-        json_path=json_path if json_path.exists() else None,
-        csv_path=csv_path if csv_path.exists() else None,
-        txt_path=txt_path if txt_path.exists() else None,
-    )
+    patients = pipeline.ingest_directory(data_dir)
 
     indexed_count = 0
     bundles_count = 0
@@ -150,7 +142,7 @@ def run_ingestion() -> IngestionStatusResponse:
         storage.save_bundle(p.patient_id, p.mrn, bundle, report)
         bundles_count += 1
 
-        # 2. AI Summarization & Vector Indexing
+        # 2. Clinical Summarization & Vector Indexing
         summary = summarizer.summarize_patient(p)
         indexed_count += vector_store.index_patient(p, summary)
 
@@ -159,8 +151,34 @@ def run_ingestion() -> IngestionStatusResponse:
         patients_processed=len(patients),
         bundles_stored=bundles_count,
         vectors_indexed=indexed_count,
-        message="EHR records successfully cleaned, mapped to FHIR R4, summarized, and indexed.",
+        message=f"Successfully ingested {len(patients)} patient records from {data_dir.name}/.",
     )
+
+
+@router.post("/upload", response_model=IngestionStatusResponse, summary="Upload & Ingest Clinical Record Files")
+async def upload_and_ingest(files: List[UploadFile] = File(...)) -> IngestionStatusResponse:
+    """Accepts uploaded individual EHR files (.json, .csv, .txt), stores them in data/raw,
+
+    and runs the normalization and indexing pipeline.
+    """
+    data_dir = get_default_data_dir()
+    data_dir.mkdir(parents=True, exist_ok=True)
+
+    saved_count = 0
+    for file in files:
+        if not file.filename:
+            continue
+        safe_filename = Path(file.filename).name
+        dest = data_dir / safe_filename
+        content = await file.read()
+        with open(dest, "wb") as f:
+            f.write(content)
+        saved_count += 1
+
+    result = run_ingestion()
+    result.files_uploaded = saved_count
+    result.message = f"Uploaded {saved_count} file(s) and re-ingested repository ({result.patients_processed} total patients)."
+    return result
 
 
 @router.get("/health", summary="Health Check")
