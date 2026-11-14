@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN 207,Fatima Dubois,1961.08.18,cis female,ENC-207-1,IMP,2024-04-18T09:00:00Z,Rheumatology Progress Note,"**Patient:** Fatima
+
+**Date:** October 26, 2023
+
+**HPI:** Patient reports morning stiffness of greater than one hour with symmetric MCP joint swelling, elevated anti-CCP antibody levels (250 U/mL).  She also describes experiencing intermittent pain and limited range of motion in her right knee.
+
+**Physical Exam:**  Patient presents with a palpable crepitus upon palpation of the MCP joint. Range of motion is limited due to pain and stiffness.  Skin examination reveals mild erythema and warmth.
+
+**Management Plan:** Continue current RA medication regimen (methotrexate). Advise patient on ice application and gentle range-of-motion exercises as tolerated. Monitor for signs of systemic inflammation and potential complications. Consider referral to rheumatologist for further"

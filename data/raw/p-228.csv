@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN-000228,Maria Pendelton,1976.05.03,female,ENC-228-1,EMER,2024-07-03T09:00:00Z,Neurology Inpatient Assessment,"## Patient: Maria
+
+**Date:** October 26, 2023
+
+**HPI:**  Maria is a 48-year-old female presenting with an acute ischemic stroke of the left MCA territory. She exhibits restricted diffusion, suggestive of significant cerebral ischemia. Aphasia is present, impacting her language comprehension and expression. Carotid stenosis is noted on imaging, potentially contributing to the stroke’s severity.
+
+**Physical Exam:**  Neurological assessment reveals aphasic presentation with slurred speech and difficulty articulating words. Cranial nerves are grossly intact, but there is mild weakness in the right arm. Vital signs are stable.
+
+**Management Plan:**  Initiate intravenous thrombolysis (IV tPA) immediately. Monitor for complications such as bleeding or secondary"

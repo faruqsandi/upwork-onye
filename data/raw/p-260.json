@@ -1,0 +1,34 @@
+{
+  "patient_id": "P-260",
+  "MRN": " 260 ",
+  "full_name": "William Haddad",
+  "birth_date": "05/08/1951",
+  "gender_code": "M",
+  "encounter": {
+    "encounter_id": "ENC-260-1",
+    "class": "IMP",
+    "period_start": "2024-04-20T09:00:00Z",
+    "period_end": "2024-04-20T10:30:00Z",
+    "reason": "Acute Anterior STEMI with critical troponin elevation"
+  },
+  "documents": [
+    {
+      "doc_id": "DOC-260-A",
+      "title": "Emergency Department Admission Note",
+      "type_code": "34108-1",
+      "date": "2024-04-20T10:00:00Z",
+      "content": "## William \u2013 Acute Anterior STEMI\n\nPatient presents with acute onset of left anterior chest pain radiating to the right arm, accompanied by diaphoresis and ST elevation at V1-V4.  Cardiac electrocardiogram reveals elevated troponin levels consistent with myocardial infarction.  Catheterization performed, confirming diagnosis and establishing intravenous access. Current management includes immediate initiation of aspirin, nitroglycerin, and morphine for pain relief and hemodynamic stabilization.  Fluid resuscitation initiated, monitoring for complications.  Plan: Continue supportive care, monitor vital signs closely, and initiate further cardiac testing as indicated by evolving clinical presentation.",
+      "mime_type": "text/plain"
+    }
+  ],
+  "diagnostics": [
+    {
+      "report_id": "DIAG-260-A",
+      "test_name": "Cardiac Troponin I",
+      "loinc_code": "10839-9",
+      "effective_date": "2024-04-20",
+      "conclusion": "Cardiac Troponin I abnormal findings: Acute Anterior STEMI with critical troponin elevation. Key indicators: chest pain, diaphoresis."
+    }
+  ],
+  "specialty": "Cardiology"
+}

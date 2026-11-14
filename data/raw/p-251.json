@@ -1,0 +1,34 @@
+{
+  "patient_id": "P-251",
+  "MRN": "MRN:000251",
+  "full_name": "Sophia Johansson",
+  "birth_date": "1963-03-24",
+  "gender_code": "UNKNOWN",
+  "encounter": {
+    "encounter_id": "ENC-251-1",
+    "class": "IMP",
+    "period_start": "2024-10-10T09:00:00Z",
+    "period_end": "2024-10-10T10:30:00Z",
+    "reason": "Class IV Lupus Nephritis Flare with severe proteinuria"
+  },
+  "documents": [
+    {
+      "doc_id": "DOC-251-A",
+      "title": "Nephrology Clinic Note",
+      "type_code": "34108-1",
+      "date": "2024-10-10T10:00:00Z",
+      "content": "## Sophia \u2013 Patient Progress\n\n**HPI:** 61-year-old female presenting with a recent Class IV Lupus Nephritis flare characterized by significant proteinuria of 3.5 mg/mg.  Associated symptoms include edema, hypertension, and ongoing hydroxychloroquine therapy.\n\n**Physical Exam:** Vital signs within normal limits. Skin appears pale, slightly moist. Peripheral edema noted bilaterally. Auscultation reveals mild breath sounds.\n\n**Management Plan:** Continue hydroxychloroquine as prescribed. Monitor renal function closely with urinalysis and blood pressure. Consider fluid management strategies to address edema if necessary.  Assess for potential complications such as kidney stones or worsening hypertension. Schedule follow-up appointment in 2 weeks to review response to treatment.",
+      "mime_type": "text/plain"
+    }
+  ],
+  "diagnostics": [
+    {
+      "report_id": "DIAG-251-A",
+      "test_name": "Urinalysis and Protein/Creatinine Ratio",
+      "loinc_code": "2888-6",
+      "effective_date": "2024-10-10",
+      "conclusion": "Urinalysis and Protein/Creatinine Ratio abnormal findings: Class IV Lupus Nephritis Flare with severe proteinuria. Key indicators: proteinuria 3.5 mg/mg, edema."
+    }
+  ],
+  "specialty": "Nephrology"
+}

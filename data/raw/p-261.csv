@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN-000261,BENJAMIN MORALES,1947.04.11,male,ENC-261-1,IMP,2024-09-19T09:00:00Z,Endocrine Outpatient Progress Note,"## Patient: Benjamin [Last Name]
+
+**Date:** October 26, 2023
+
+**HPI:** Mr. Benjamin is a 77-year-old male presenting with uncontrolled Type 2 Diabetes mellitus and peripheral neuropathy. His HbA1c is elevated at > 10%, indicating significant hyperglycemia. He reports intermittent foot tingling and recent concerns regarding retinopathy. Current medication regimen includes metformin.
+
+**Physical Exam:**  Patient appears frail, slightly elevated pulse. Neurological examination reveals mild ankle reflexes. Skin exam shows signs of peripheral neuropathy – dry, pale skin with diminished tactile sensation.
+
+**Management Plan:** Continue current metformin therapy. Monitor HbA1c closely. Schedule follow-up appointment within 30 days to assess for progression of neuropathy and retinal"

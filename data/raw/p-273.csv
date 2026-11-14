@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+ 273 ,Sarah Johansson,10/27/1973,M,ENC-273-1,IMP,2023-06-25T09:00:00Z,Endocrine Outpatient Progress Note,"## Patient: Sarah
+
+**Date:** October 26, 2023
+
+**HPI:** 51-year-old female presenting with uncontrolled Type 2 Diabetes (HbA1c > 10%), accompanied by peripheral neuropathy manifesting as foot tingling. Current medication regimen includes metformin and ongoing retinopathy monitoring. Patient reports concerning symptoms and requires a comprehensive management plan focusing on glycemic control, neuropathy education, and potential referral to podiatrist for further evaluation and potential intervention.
+
+**Physical Exam:**  Patient presents with mild tremor in the extremities. Skin exam unremarkable. Vital signs within normal limits. Reflexes are slightly diminished bilaterally.
+
+**Management Plan:** Initiate metformin titration based on current HbA1c levels. Schedule follow-up appointment to assess neuropathy progression and adjust"

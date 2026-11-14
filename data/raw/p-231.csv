@@ -1,0 +1,8 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN:000231,William Nakamura,06/14/1949,male,ENC-231-1,IMP,2023-05-04T09:00:00Z,Rheumatology Progress Note,"**Patient:** William, 75yo male. Condition: Seropositive Rheumatoid Arthritis with erosive joint changes.
+
+**HPI:** Patient reports morning stiffness exceeding 1 hour, bilateral MCP joint swelling, elevated anti-CCP antibody levels (250 U/mL).  Reports pain and limited range of motion in both hands.
+
+**Physical Exam:**  Patient presents with a palpable, tender MCP joint.  Palpable effusion noted.  Range of motion restricted.  Skin examination unremarkable.
+
+**Management Plan:** Initiate NSAID therapy as prescribed. Monitor anti-CCP levels bi-weekly. Consider physical therapy to improve range of motion and pain management. Continue rheumatologist consultation for ongoing monitoring and potential disease modification strategies."

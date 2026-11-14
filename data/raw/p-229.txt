@@ -1,0 +1,13 @@
+--- RECORD START ---
+PATIENT IDENTIFIER: MRN-000229
+PATIENT NAME: Alexander Vance
+DOB: 07/25/1966
+GENDER: UNKNOWN
+ENCOUNTER REF: ENC-229-1 (IMP)
+COLLECTION DATE: 2023-02-25
+TEST PANEL: B-Type Natriuretic Peptide (BNP) (LOINC: 30934-4)
+FINDINGS:
+B-Type Natriuretic Peptide (BNP) abnormal findings: Acute Decompensated Congestive Heart Failure. Key indicators: BNP > 1500 pg/mL, orthopnea.
+CLINICAL IMPRESSION:
+Confirmed diagnosis of Acute Decompensated Congestive Heart Failure.
+--- RECORD END ---

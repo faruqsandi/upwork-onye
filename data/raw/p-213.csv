@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN:000213,David Thorne,1952-03-13,non-binary,ENC-213-1,IMP,2023-12-24T09:00:00Z,Endocrine Outpatient Progress Note,"## David – Patient Chart
+
+**Date:** October 26, 2023
+
+**HPI:** Mr. David presents with uncontrolled Type 2 Diabetes (HbA1c > 10%), presenting with peripheral neuropathy and foot tingling. He is currently on metformin therapy.  Visual assessment reveals mild retinopathy requiring further evaluation.
+
+**Physical Exam:** Vital signs within normal limits. Peripheral examination reveals diminished sensation in the feet, with tactile deficits noted. Gait unsteady.
+
+**Management Plan:** Continue current metformin regimen. Initiate routine foot cultures to rule out infection. Monitor HbA1c monthly and adjust medication as needed based on glycemic control. Referral scheduled for ophthalmologist to assess retinal health.  Patient education regarding neuropathy management and potential complications emphasized."

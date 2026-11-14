@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN-000297,Fatima 'Fat' Al-Mansoor,1989.07.20,UNKNOWN,ENC-297-1,EMER,2024-05-04T09:00:00Z,Endocrine Outpatient Progress Note,"## Patient: Fatima
+
+**Date:** October 26, 2023
+
+**HPI:** 35-year-old female presenting with uncontrolled Type 2 Diabetes (HbA1c > 10%), accompanied by peripheral neuropathy manifesting as foot tingling. Currently on metformin therapy. History includes retinal examination indicating diabetic retinopathy.  Patient reports concerning symptoms and requires urgent management to address hyperglycemia, neuropathy progression, and potential vision impairment.
+
+**Physical Exam:** Patient appears fatigued with mild ankle swelling. Reflexes are diminished bilaterally. Skin is dry and pale. No acute signs of infection.
+
+**Management Plan:** Continue metformin regimen. Monitor HbA1c closely. Initiate comprehensive diabetic education focusing on foot care, blood glucose monitoring, and potential complications. Referral to ophthalmologist"

@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN:000288,ARTHUR RODRIGUEZ-SANTOS,05/07/1957,M,ENC-288-1,IMP,2023-05-10T09:00:00Z,Neurology Inpatient Assessment,"## Patient: Arthur
+
+**Date:** October 26, 2023
+
+**HPI:** Mr. Arthur is a 67-year-old male presenting with an acute ischemic stroke of the left major arcuate artery (MCA). He exhibits restricted diffusion, suggestive of significant cerebral infarction.  He presents with aphasia, indicating language impairment, and carotid stenosis noted on neuroimaging. Current neurological status stable but requires close monitoring for potential complications such as pneumonia and secondary stroke.
+
+**Physical Exam:** Vital signs within normal limits. Alert and oriented to person, place, and time. Facial expression is mildly constricted.  Neurological examination reveals weakness in the left side of the body, with slurred speech and difficulty articulating words.  No focal deficits noted.
+
+**"

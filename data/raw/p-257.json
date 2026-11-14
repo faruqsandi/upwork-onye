@@ -1,0 +1,34 @@
+{
+  "patient_id": "P-257",
+  "MRN": "MRN-000257",
+  "full_name": "Liam Johansson",
+  "birth_date": "09/13/1969",
+  "gender_code": "M",
+  "encounter": {
+    "encounter_id": "ENC-257-1",
+    "class": "IMP",
+    "period_start": "2023-02-13T09:00:00Z",
+    "period_end": "2023-02-13T10:30:00Z",
+    "reason": "Severe Refractory Atopic Dermatitis with extreme IgE elevation"
+  },
+  "documents": [
+    {
+      "doc_id": "DOC-257-A",
+      "title": "Allergy & Immunology Progress Note",
+      "type_code": "34108-1",
+      "date": "2023-02-13T10:00:00Z",
+      "content": "## Patient: Liam\n\n**Date:** 2023-10-27\n\n**HPI:** Mr. Liam presents with severe refractory atopic dermatitis exhibiting elevated IgE levels (1600 IU/mL). Significant pruritus is reported, impacting daily activities. He is currently receiving dupilumab biologic therapy for ongoing management.\n\n**Physical Exam:**  Patient demonstrates moderate pruritus localized to the dorsal aspect of the extremities. Skin appears dry and inflamed with minimal scaling. No evidence of bullae or significant edema.\n\n**Management Plan:**  Initiate dupilumab maintenance dose, monitor IgE levels weekly. Continue topical corticosteroids for symptomatic relief. Advise patient on potential side effects of dupilumab and encourage adherence to treatment regimen. Consider referral to dermatology specialist for",
+      "mime_type": "text/plain"
+    }
+  ],
+  "diagnostics": [
+    {
+      "report_id": "DIAG-257-A",
+      "test_name": "Total Serum Immunoglobulin E (IgE)",
+      "loinc_code": "24323-8",
+      "effective_date": "2023-02-13",
+      "conclusion": "Total Serum Immunoglobulin E (IgE) abnormal findings: Severe Refractory Atopic Dermatitis with extreme IgE elevation. Key indicators: total IgE > 1600 IU/mL, severe pruritus."
+    }
+  ],
+  "specialty": "Allergy & Immunology"
+}

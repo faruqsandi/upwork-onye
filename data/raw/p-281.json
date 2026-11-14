@@ -1,0 +1,34 @@
+{
+  "patient_id": "P-281",
+  "MRN": " 281 ",
+  "full_name": "Sophia Haddad",
+  "birth_date": "03/27/1974",
+  "gender_code": "F",
+  "encounter": {
+    "encounter_id": "ENC-281-1",
+    "class": "IMP",
+    "period_start": "2023-06-07T09:00:00Z",
+    "period_end": "2023-06-07T10:30:00Z",
+    "reason": "Severe Refractory Atopic Dermatitis with extreme IgE elevation"
+  },
+  "documents": [
+    {
+      "doc_id": "DOC-281-A",
+      "title": "Allergy & Immunology Progress Note",
+      "type_code": "34108-1",
+      "date": "2023-06-07T10:00:00Z",
+      "content": "## Sophia - Patient Progress\n\n**Date:** October 26, 2023\n\n**HPI:**  Patient presents with severely reactive atopic dermatitis exhibiting elevated total IgE levels (1600 IU/mL). Significant pruritus is noted, impacting sleep and quality of life. Current treatment regimen includes dupilumab biologic therapy.\n\n**Physical Exam:**  Skin examination reveals extensive scaling and erythema, consistent with severe eczema.  Palpation indicates intense tenderness in affected areas. No signs of systemic involvement.\n\n**Management Plan:**  Continue dupilumab infusion as prescribed. Monitor IgE levels weekly for response assessment. Consider adjunctive topical corticosteroids if pruritus persists or worsens. Educate patient on potential side effects and monitoring protocols. Schedule follow-up appointment in",
+      "mime_type": "text/plain"
+    }
+  ],
+  "diagnostics": [
+    {
+      "report_id": "DIAG-281-A",
+      "test_name": "Total Serum Immunoglobulin E (IgE)",
+      "loinc_code": "24323-8",
+      "effective_date": "2023-06-07",
+      "conclusion": "Total Serum Immunoglobulin E (IgE) abnormal findings: Severe Refractory Atopic Dermatitis with extreme IgE elevation. Key indicators: total IgE > 1600 IU/mL, severe pruritus."
+    }
+  ],
+  "specialty": "Allergy & Immunology"
+}

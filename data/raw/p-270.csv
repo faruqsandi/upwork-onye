@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+ 270 ,Sarah Hayes,1972.10.08,non-binary,ENC-270-1,AMB,2023-12-04T09:00:00Z,Orthopedic Surgery Clinic Note,"**Patient:** Sarah
+
+**Date:** October 26, 2023
+
+**HPI:** Patient presents with significant pain and limited range of motion in the right knee following a recent diagnosis of severe Tricompartmental Osteoarthritis.  Reports persistent clicking and locking sensations.  History reveals history of osteoarthritis prior to this episode.  Patient is considering total knee arthroplasty as a potential treatment option.
+
+**Physical Exam:**  Range of motion limited, with pain exacerbated by flexion and extension.  Tenderness palpable over the medial joint line.  Neurological examination unremarkable.  Palpable osteophytes noted.
+
+**Management Plan:** Initiate physical therapy focusing on strengthening and range of motion exercises.  Prescribe NSAIDs for symptomatic relief. Monitor for signs of complications ("

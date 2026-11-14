@@ -1,0 +1,34 @@
+{
+  "patient_id": "P-275",
+  "MRN": "MRN:000275",
+  "full_name": "Fatima Rodriguez-Santos",
+  "birth_date": "12/27/1944",
+  "gender_code": "cis female",
+  "encounter": {
+    "encounter_id": "ENC-275-1",
+    "class": "EMER",
+    "period_start": "2024-01-19T09:00:00Z",
+    "period_end": "2024-01-19T10:30:00Z",
+    "reason": "Class IV Lupus Nephritis Flare with severe proteinuria"
+  },
+  "documents": [
+    {
+      "doc_id": "DOC-275-A",
+      "title": "Nephrology Clinic Note",
+      "type_code": "34108-1",
+      "date": "2024-01-19T10:00:00Z",
+      "content": "**Patient:** Fatima\n\n**Date:** October 26, 2023\n\n**HPI:** Patient presents with a worsening Class IV Lupus Nephritis flare characterized by markedly elevated proteinuria (3.5 mg/mg).  Associated symptoms include significant edema and hypertension. Current medication regimen includes hydroxychloroquine.\n\n**Physical Exam:** Vital signs within normal limits. Skin appears pale, slightly moist. Peripheral pulses are palpable but weak. Edema is noted in the lower extremities.\n\n**Management Plan:** Continue hydroxychloroquine as prescribed. Monitor renal function (creatinine, BUN) frequently. Assess for and address secondary causes of edema, such as fluid overload. Instruct patient on signs and symptoms of worsening nephropathy and potential complications.  Consider referral to Nephrology if symptoms persist or",
+      "mime_type": "text/plain"
+    }
+  ],
+  "diagnostics": [
+    {
+      "report_id": "DIAG-275-A",
+      "test_name": "Urinalysis and Protein/Creatinine Ratio",
+      "loinc_code": "2888-6",
+      "effective_date": "2024-01-19",
+      "conclusion": "Urinalysis and Protein/Creatinine Ratio abnormal findings: Class IV Lupus Nephritis Flare with severe proteinuria. Key indicators: proteinuria 3.5 mg/mg, edema."
+    }
+  ],
+  "specialty": "Nephrology"
+}

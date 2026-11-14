@@ -1,0 +1,13 @@
+--- RECORD START ---
+PATIENT IDENTIFIER: 298
+PATIENT NAME: William 'Wil' O'Connor
+DOB: 1968.01.03
+GENDER: UNKNOWN
+ENCOUNTER REF: ENC-298-1 (IMP)
+COLLECTION DATE: 2023-08-17
+TEST PANEL: Chest Radiography (CXR 2-Views) (LOINC: 24648-8)
+FINDINGS:
+Chest Radiography (CXR 2-Views) abnormal findings: Community-Acquired Lobar Pneumonia. Key indicators: dense consolidation, purulent sputum.
+CLINICAL IMPRESSION:
+Confirmed diagnosis of Community-Acquired Lobar Pneumonia.
+--- RECORD END ---

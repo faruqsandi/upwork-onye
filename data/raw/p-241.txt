@@ -1,0 +1,13 @@
+--- RECORD START ---
+PATIENT IDENTIFIER: MRN 241
+PATIENT NAME: ELEANOR JOHANSSON
+DOB: 1986-09-20
+GENDER: cis female
+ENCOUNTER REF: ENC-241-1 (AMB)
+COLLECTION DATE: 2023-10-14
+TEST PANEL: B-Type Natriuretic Peptide (BNP) (LOINC: 30934-4)
+FINDINGS:
+B-Type Natriuretic Peptide (BNP) abnormal findings: Acute Decompensated Congestive Heart Failure. Key indicators: BNP > 1500 pg/mL, orthopnea.
+CLINICAL IMPRESSION:
+Confirmed diagnosis of Acute Decompensated Congestive Heart Failure.
+--- RECORD END ---

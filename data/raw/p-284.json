@@ -1,0 +1,34 @@
+{
+  "patient_id": "P-284",
+  "MRN": " 284 ",
+  "full_name": "Arthur Chen",
+  "birth_date": "1952.09.26",
+  "gender_code": "non-binary",
+  "encounter": {
+    "encounter_id": "ENC-284-1",
+    "class": "EMER",
+    "period_start": "2023-01-02T09:00:00Z",
+    "period_end": "2023-01-02T10:30:00Z",
+    "reason": "Acute Anterior STEMI with critical troponin elevation"
+  },
+  "documents": [
+    {
+      "doc_id": "DOC-284-A",
+      "title": "Emergency Department Admission Note",
+      "type_code": "34108-1",
+      "date": "2023-01-02T10:00:00Z",
+      "content": "## Patient: Arthur\n\n**Date:** October 26, 2023\n\n**HPI:** Mr. Arthur presents with acute anterior STEMI, evidenced by chest pain radiating to the left arm, diaphoresis, and ST elevation at V1-V4.  Elevated troponin levels (elevated) are noted. Catheterization was performed to confirm diagnosis and assess for possible embolization.\n\n**Physical Exam:** Vital signs stable, but exhibiting signs of distress.  Respiratory rate is elevated. Skin appears pale and cool.  Neurological assessment shows mild deficits in right arm motor function.\n\n**Management Plan:** Immediate initiation of intravenous fluids (lactated ringers) to address hypotension. Oxygen via nasal cannula at 2L/min.  Administered aspirin",
+      "mime_type": "text/plain"
+    }
+  ],
+  "diagnostics": [
+    {
+      "report_id": "DIAG-284-A",
+      "test_name": "Cardiac Troponin I",
+      "loinc_code": "10839-9",
+      "effective_date": "2023-01-02",
+      "conclusion": "Cardiac Troponin I abnormal findings: Acute Anterior STEMI with critical troponin elevation. Key indicators: chest pain, diaphoresis."
+    }
+  ],
+  "specialty": "Cardiology"
+}

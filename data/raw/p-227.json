@@ -1,0 +1,34 @@
+{
+  "patient_id": "P-227",
+  "MRN": "MRN 227",
+  "full_name": "Amina Pendelton",
+  "birth_date": "1961-09-03",
+  "gender_code": "non-binary",
+  "encounter": {
+    "encounter_id": "ENC-227-1",
+    "class": "AMB",
+    "period_start": "2023-04-06T09:00:00Z",
+    "period_end": "2023-04-06T10:30:00Z",
+    "reason": "Class IV Lupus Nephritis Flare with severe proteinuria"
+  },
+  "documents": [
+    {
+      "doc_id": "DOC-227-A",
+      "title": "Nephrology Clinic Note",
+      "type_code": "34108-1",
+      "date": "2023-04-06T10:00:00Z",
+      "content": "## Patient: Amina\n\n**Date:** October 26, 2023\n\n**HPI:**  Patient presents with a significant Lupus Nephritis flare exhibiting markedly elevated proteinuria (3.5 mg/mg).  Associated symptoms include severe edema and hypertension.  Current medication regimen includes hydroxychloroquine.\n\n**Physical Exam:** Vital signs within normal limits. Skin appears pale, slightly cyanotic in the lower extremities.  Peripheral edema is prominent.  Heart rate is elevated.\n\n**Management Plan:** Continue hydroxychloroquine as prescribed. Monitor urine output closely for fluid retention. Assess for signs of renal compromise (e.g., encephalopathy, hypotension). Consider intravenous fluids if indicated to address edema and hypertension. Instructed on dietary modifications to minimize protein intake.",
+      "mime_type": "text/plain"
+    }
+  ],
+  "diagnostics": [
+    {
+      "report_id": "DIAG-227-A",
+      "test_name": "Urinalysis and Protein/Creatinine Ratio",
+      "loinc_code": "2888-6",
+      "effective_date": "2023-04-06",
+      "conclusion": "Urinalysis and Protein/Creatinine Ratio abnormal findings: Class IV Lupus Nephritis Flare with severe proteinuria. Key indicators: proteinuria 3.5 mg/mg, edema."
+    }
+  ],
+  "specialty": "Nephrology"
+}

@@ -1,0 +1,34 @@
+{
+  "patient_id": "P-263",
+  "MRN": "MRN-000263",
+  "full_name": "Alexander 'Ale' Kowalski",
+  "birth_date": "09/23/1959",
+  "gender_code": "male",
+  "encounter": {
+    "encounter_id": "ENC-263-1",
+    "class": "IMP",
+    "period_start": "2023-12-28T09:00:00Z",
+    "period_end": "2023-12-28T10:30:00Z",
+    "reason": "Class IV Lupus Nephritis Flare with severe proteinuria"
+  },
+  "documents": [
+    {
+      "doc_id": "DOC-263-A",
+      "title": "Nephrology Clinic Note",
+      "type_code": "34108-1",
+      "date": "2023-12-28T10:00:00Z",
+      "content": "## Alexander - Patient Notes\n\n**Patient:** Alexander, 65yo male.\n**Condition:** Class IV Lupus Nephritis Flare with severe proteinuria.\n**HPI:**  Presenting with a significant increase in proteinuria (3.5 mg/mg), accompanied by edema and hypertension. Reports experiencing increased fatigue and shortness of breath secondary to the renal involvement. History reveals recent onset of lupus flare, potentially exacerbated by medication.\n\n**Physical Exam:** Vital signs within normal limits, but noted elevated blood pressure (160/95 mmHg).  Peripheral edema is present, particularly in lower extremities.  Skin appears dry and pale.\n\n**Management Plan:** Initiate intravenous hydroxychloroquine 200mg q8h. Monitor renal function closely with creatinine and urine protein levels. Assess",
+      "mime_type": "text/plain"
+    }
+  ],
+  "diagnostics": [
+    {
+      "report_id": "DIAG-263-A",
+      "test_name": "Urinalysis and Protein/Creatinine Ratio",
+      "loinc_code": "2888-6",
+      "effective_date": "2023-12-28",
+      "conclusion": "Urinalysis and Protein/Creatinine Ratio abnormal findings: Class IV Lupus Nephritis Flare with severe proteinuria. Key indicators: proteinuria 3.5 mg/mg, edema."
+    }
+  ],
+  "specialty": "Nephrology"
+}

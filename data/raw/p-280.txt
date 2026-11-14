@@ -1,0 +1,13 @@
+--- RECORD START ---
+PATIENT IDENTIFIER: MRN:000280
+PATIENT NAME: Sarah Kowalski
+DOB: 08/27/1991
+GENDER: male
+ENCOUNTER REF: ENC-280-1 (AMB)
+COLLECTION DATE: 2024-11-05
+TEST PANEL: Carcinoembryonic Antigen (CEA) and Surveillance CT (LOINC: 24323-8)
+FINDINGS:
+Carcinoembryonic Antigen (CEA) and Surveillance CT abnormal findings: Colorectal Adenocarcinoma Post-Resection Surveillance. Key indicators: status-post hemicolectomy, CEA 1.6 ng/mL.
+CLINICAL IMPRESSION:
+Confirmed diagnosis of Colorectal Adenocarcinoma Post-Resection Surveillance.
+--- RECORD END ---

@@ -1,0 +1,13 @@
+--- RECORD START ---
+PATIENT IDENTIFIER: MRN-000262
+PATIENT NAME: Grace Al-Mansoor
+DOB: 11/01/1992
+GENDER: non-binary
+ENCOUNTER REF: ENC-262-1 (AMB)
+COLLECTION DATE: 2023-02-24
+TEST PANEL: Chest Radiography (CXR 2-Views) (LOINC: 24648-8)
+FINDINGS:
+Chest Radiography (CXR 2-Views) abnormal findings: Community-Acquired Lobar Pneumonia. Key indicators: dense consolidation, purulent sputum.
+CLINICAL IMPRESSION:
+Confirmed diagnosis of Community-Acquired Lobar Pneumonia.
+--- RECORD END ---

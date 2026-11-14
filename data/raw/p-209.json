@@ -1,0 +1,34 @@
+{
+  "patient_id": "P-209",
+  "MRN": "MRN:000209",
+  "full_name": "MATEO THORNE",
+  "birth_date": "12/28/1950",
+  "gender_code": "M",
+  "encounter": {
+    "encounter_id": "ENC-209-1",
+    "class": "AMB",
+    "period_start": "2024-11-04T09:00:00Z",
+    "period_end": "2024-11-04T10:30:00Z",
+    "reason": "Severe Refractory Atopic Dermatitis with extreme IgE elevation"
+  },
+  "documents": [
+    {
+      "doc_id": "DOC-209-A",
+      "title": "Allergy & Immunology Progress Note",
+      "type_code": "34108-1",
+      "date": "2024-11-04T10:00:00Z",
+      "content": "## Patient: Mateo, 74yo M. Condition: Severe Refractory Atopic Dermatitis with extreme IgE elevation.\n\n**HPI:**  Patient presents with persistent, severe atopic dermatitis unresponsive to dupilumab. Elevated total IgE levels (1620 IU/mL) are noted. Significant pruritus is present, exacerbated by scratching and secondary skin breakdown. Patient reports a markedly itchy, debilitating condition.\n\n**Physical Exam:**  Skin examination reveals extensive lichenification and erosions along the dorsal aspect of the lower extremities.  Pruritus is localized to the affected areas.  No evidence of systemic illness.\n\n**Management Plan:**  Initiate dupilumab therapy at prescribed dose. Monitor IgE levels weekly for response. Consider adjunctive topical corticosteroids and",
+      "mime_type": "text/plain"
+    }
+  ],
+  "diagnostics": [
+    {
+      "report_id": "DIAG-209-A",
+      "test_name": "Total Serum Immunoglobulin E (IgE)",
+      "loinc_code": "24323-8",
+      "effective_date": "2024-11-04",
+      "conclusion": "Total Serum Immunoglobulin E (IgE) abnormal findings: Severe Refractory Atopic Dermatitis with extreme IgE elevation. Key indicators: total IgE > 1600 IU/mL, severe pruritus."
+    }
+  ],
+  "specialty": "Allergy & Immunology"
+}

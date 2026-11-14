@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN:000225,Benjamin Nakamura,1981-04-11,M,ENC-225-1,EMER,2023-12-10T09:00:00Z,Endocrine Outpatient Progress Note,"## Patient: Benjamin
+
+**Date:** October 26, 2023
+
+**HPI:** 43-year-old male presenting with uncontrolled Type 2 Diabetes (HbA1c > 10%), peripheral neuropathy manifesting as foot tingling and associated retinopathy. Current medication regimen includes metformin.
+
+**Physical Exam:**  Patient presents alert and oriented. Vital signs within normal limits. Peripheral examination reveals mild tactile sensation in lower extremities, with intermittent tingling noted. No acute deficits observed. Retinopathy is mildly elevated, requiring further evaluation.
+
+**Management Plan:** Continue current metformin therapy. Monitor HbA1c closely. Schedule follow-up appointment for comprehensive retinopathy assessment and management of neuropathy symptoms. Consider referral to podiatrist for specialized foot care."

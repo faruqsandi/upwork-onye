@@ -1,0 +1,34 @@
+{
+  "patient_id": "P-242",
+  "MRN": "MRN:000242",
+  "full_name": "Zara Patel",
+  "birth_date": "1945-10-21",
+  "gender_code": "non-binary",
+  "encounter": {
+    "encounter_id": "ENC-242-1",
+    "class": "IMP",
+    "period_start": "2024-06-05T09:00:00Z",
+    "period_end": "2024-06-05T10:30:00Z",
+    "reason": "Acute Cholecystitis with symptomatic cholelithiasis"
+  },
+  "documents": [
+    {
+      "doc_id": "DOC-242-A",
+      "title": "Gastroenterology Consultation Note",
+      "type_code": "34108-1",
+      "date": "2024-06-05T10:00:00Z",
+      "content": "## Patient: Zara\n\n**Date:** October 26, 2023\n\n**HPI:** Elderly female presenting with acute cholecystitis secondary to symptomatic cholelithiasis. Reports of abdominal pain, localized to the right upper quadrant, radiating to the left flank.  Patient states experiencing significant discomfort and nausea. Murphy\u2019s sign present upon palpation.\n\n**Physical Exam:** Vital signs stable, slightly elevated respiratory rate. Abdomen soft, non-tender to palpation, with mild guarding. No rebound tenderness.\n\n**Management Plan:** Laparoscopic cholecystectomy performed successfully. Postoperative pain management initiated with acetaminophen and IV fluids.  Patient educated on dietary modifications and monitoring for complications. Discharge home with instructions for wound care and follow-up appointment in",
+      "mime_type": "text/plain"
+    }
+  ],
+  "diagnostics": [
+    {
+      "report_id": "DIAG-242-A",
+      "test_name": "Right Upper Quadrant Abdominal Ultrasound",
+      "loinc_code": "24331-1",
+      "effective_date": "2024-06-05",
+      "conclusion": "Right Upper Quadrant Abdominal Ultrasound abnormal findings: Acute Cholecystitis with symptomatic cholelithiasis. Key indicators: gallbladder wall thickening, cholelithiasis."
+    }
+  ],
+  "specialty": "Gastroenterology"
+}

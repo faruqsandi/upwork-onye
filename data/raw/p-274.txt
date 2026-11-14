@@ -1,0 +1,13 @@
+--- RECORD START ---
+PATIENT IDENTIFIER: 274
+PATIENT NAME: Priya 'Pri' Haddad
+DOB: 1981.11.18
+GENDER: cis female
+ENCOUNTER REF: ENC-274-1 (IMP)
+COLLECTION DATE: 2023-04-07
+TEST PANEL: Chest Radiography (CXR 2-Views) (LOINC: 24648-8)
+FINDINGS:
+Chest Radiography (CXR 2-Views) abnormal findings: Community-Acquired Lobar Pneumonia. Key indicators: dense consolidation, purulent sputum.
+CLINICAL IMPRESSION:
+Confirmed diagnosis of Community-Acquired Lobar Pneumonia.
+--- RECORD END ---

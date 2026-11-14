@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN 258,Priya Vance,1995.12.16,M,ENC-258-1,EMER,2024-02-10T09:00:00Z,Orthopedic Surgery Clinic Note,"## Patient: Priya
+
+**Date:** 2023-10-27
+
+**HPI:** Patient presents with a significant, debilitating pain episode in her right knee following a recent traumatic injury. Reports of crepitus and limited range of motion. History reveals severe osteoarthritis impacting the medial compartment, evidenced by bone-on-bone narrowing and subchondral sclerosis.  Patient is considered a strong candidate for total knee arthroplasty due to the advanced stage of degeneration.
+
+**Physical Exam:**  Range of motion restricted, with significant pain upon flexion and extension. Palpable osteophyte tenderness on palpation.  Neurological examination unremarkable.
+
+**Management Plan:** Initiate conservative treatment including NSAIDs, physical therapy focusing on strengthening and range of motion exercises, and consideration for"

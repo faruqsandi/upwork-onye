@@ -1,0 +1,8 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN-000252,Marcus Chen,1969-03-14,F,ENC-252-1,EMER,2023-08-28T09:00:00Z,Neurology Inpatient Assessment,"## Patient: Marcus
+
+**Date:** 2023-10-27
+
+**HPI:** Mr. Marcus presents with acute ischemic stroke of the left MCA territory. He reports experiencing sudden onset of severe headache, slurred speech, and difficulty understanding language.  He is exhibiting restricted diffusion, a characteristic neurological finding suggestive of ischemic damage. Examination reveals aphasia, indicating language impairment, and carotid stenosis noted on neuroimaging. Current management plan includes initiation of thrombolysis, supportive care focusing on respiratory support and monitoring for complications. Further neurological evaluation is crucial to assess recovery trajectory.
+
+---"

@@ -1,0 +1,13 @@
+--- RECORD START ---
+PATIENT IDENTIFIER: MRN 211
+PATIENT NAME: Sarah Al-Mansoor
+DOB: 1999.05.25
+GENDER: cis female
+ENCOUNTER REF: ENC-211-1 (IMP)
+COLLECTION DATE: 2023-06-21
+TEST PANEL: Comprehensive Thyroid Panel with TPO Antibodies (LOINC: 11579-0)
+FINDINGS:
+Comprehensive Thyroid Panel with TPO Antibodies abnormal findings: Primary Hypothyroidism secondary to Hashimoto's Thyroiditis. Key indicators: TSH 32 uIU/mL, Free T4 0.35 ng/dL.
+CLINICAL IMPRESSION:
+Confirmed diagnosis of Primary Hypothyroidism secondary to Hashimoto's Thyroiditis.
+--- RECORD END ---

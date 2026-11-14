@@ -1,0 +1,34 @@
+{
+  "patient_id": "P-269",
+  "MRN": "MRN-000269",
+  "full_name": "Maria 'Mar' O'Connor",
+  "birth_date": "09/03/1976",
+  "gender_code": "F",
+  "encounter": {
+    "encounter_id": "ENC-269-1",
+    "class": "IMP",
+    "period_start": "2023-09-24T09:00:00Z",
+    "period_end": "2023-09-24T10:30:00Z",
+    "reason": "Severe Refractory Atopic Dermatitis with extreme IgE elevation"
+  },
+  "documents": [
+    {
+      "doc_id": "DOC-269-A",
+      "title": "Allergy & Immunology Progress Note",
+      "type_code": "34108-1",
+      "date": "2023-09-24T10:00:00Z",
+      "content": "## Patient: Maria\n\n**Date:** 2023-10-27\n\n**Age:** 48 years old\n\n**Sex:** Female\n\n**Chief Complaint:** Severe refractory atopic dermatitis with elevated IgE levels.\n\n**History of Present Illness:**  Patient presents with a chronic, debilitating eczema flare unresponsive to conventional treatments. Elevated total IgE (1600 IU/mL) is noted, along with significant pruritus and extensive skin lesions. Current treatment regimen includes dupilumab biologic therapy.\n\n**Physical Exam:**  Skin examination reveals diffuse erythema, scaling, and crusting across the extremities and trunk. No evidence of secondary infection.\n\n**Management Plan:**  Initiate dupilumab infusion at prescribed dose. Monitor IgE levels weekly for response",
+      "mime_type": "text/plain"
+    }
+  ],
+  "diagnostics": [
+    {
+      "report_id": "DIAG-269-A",
+      "test_name": "Total Serum Immunoglobulin E (IgE)",
+      "loinc_code": "24323-8",
+      "effective_date": "2023-09-24",
+      "conclusion": "Total Serum Immunoglobulin E (IgE) abnormal findings: Severe Refractory Atopic Dermatitis with extreme IgE elevation. Key indicators: total IgE > 1600 IU/mL, severe pruritus."
+    }
+  ],
+  "specialty": "Allergy & Immunology"
+}

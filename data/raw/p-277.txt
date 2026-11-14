@@ -1,0 +1,13 @@
+--- RECORD START ---
+PATIENT IDENTIFIER: 277
+PATIENT NAME: Benjamin 'Ben' Sterling
+DOB: 1943-12-15
+GENDER: M
+ENCOUNTER REF: ENC-277-1 (AMB)
+COLLECTION DATE: 2023-05-11
+TEST PANEL: B-Type Natriuretic Peptide (BNP) (LOINC: 30934-4)
+FINDINGS:
+B-Type Natriuretic Peptide (BNP) abnormal findings: Acute Decompensated Congestive Heart Failure. Key indicators: BNP > 1500 pg/mL, orthopnea.
+CLINICAL IMPRESSION:
+Confirmed diagnosis of Acute Decompensated Congestive Heart Failure.
+--- RECORD END ---

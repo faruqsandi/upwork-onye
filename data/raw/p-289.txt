@@ -1,0 +1,13 @@
+--- RECORD START ---
+PATIENT IDENTIFIER: 289
+PATIENT NAME: Sophia Al-Mansoor
+DOB: 1963-10-10
+GENDER: female
+ENCOUNTER REF: ENC-289-1 (IMP)
+COLLECTION DATE: 2023-11-16
+TEST PANEL: B-Type Natriuretic Peptide (BNP) (LOINC: 30934-4)
+FINDINGS:
+B-Type Natriuretic Peptide (BNP) abnormal findings: Acute Decompensated Congestive Heart Failure. Key indicators: BNP > 1500 pg/mL, orthopnea.
+CLINICAL IMPRESSION:
+Confirmed diagnosis of Acute Decompensated Congestive Heart Failure.
+--- RECORD END ---

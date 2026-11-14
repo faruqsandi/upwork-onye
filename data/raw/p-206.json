@@ -1,0 +1,34 @@
+{
+  "patient_id": "P-206",
+  "MRN": "MRN-000206",
+  "full_name": "Alexander Kelly",
+  "birth_date": "1967.06.14",
+  "gender_code": "F",
+  "encounter": {
+    "encounter_id": "ENC-206-1",
+    "class": "IMP",
+    "period_start": "2023-03-25T09:00:00Z",
+    "period_end": "2023-03-25T10:30:00Z",
+    "reason": "Acute Cholecystitis with symptomatic cholelithiasis"
+  },
+  "documents": [
+    {
+      "doc_id": "DOC-206-A",
+      "title": "Gastroenterology Consultation Note",
+      "type_code": "34108-1",
+      "date": "2023-03-25T10:00:00Z",
+      "content": "## Alexander \u2013 Patient Notes\n\n**Date:** 2023-10-27\n\n**HPI:** 57-year-old male presenting with acute cholecystitis accompanied by symptomatic cholelithiasis.  Patient reports abdominal pain, localized to the right upper quadrant, radiating to the right flank.  Positive Murphy\u2019s sign upon palpation.  History reveals prior gallbladder issues and a laparoscopic cholecystectomy performed six months ago.\n\n**Physical Exam:**  Appears mildly distended abdomen with tenderness to palpation in the RUQ. Bowel sounds are present but diminished. No rebound tenderness noted.\n\n**Management Plan:**  Initiated intravenous fluids for hydration. Administered IV antibiotics (Ceftriaxone 2g IV). Scheduled follow",
+      "mime_type": "text/plain"
+    }
+  ],
+  "diagnostics": [
+    {
+      "report_id": "DIAG-206-A",
+      "test_name": "Right Upper Quadrant Abdominal Ultrasound",
+      "loinc_code": "24331-1",
+      "effective_date": "2023-03-25",
+      "conclusion": "Right Upper Quadrant Abdominal Ultrasound abnormal findings: Acute Cholecystitis with symptomatic cholelithiasis. Key indicators: gallbladder wall thickening, cholelithiasis."
+    }
+  ],
+  "specialty": "Gastroenterology"
+}

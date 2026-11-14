@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN:000279,Priya Chen,10/10/1988,cis-male,ENC-279-1,AMB,2024-04-16T09:00:00Z,Rheumatology Progress Note,"## Patient: Priya
+
+**Date:** 2023-10-27
+
+**HPI:** 36-year-old male presenting with seropositive rheumatoid arthritis (RA) exhibiting erosive joint changes. Reports morning stiffness exceeding 1 hour, symmetric MCP joint swelling, and elevated anti-CCP levels at 250 U/mL.
+
+**Physical Exam:**  Patient demonstrates bilateral MCP joint swelling upon palpation.  Limited range of motion in both joints.  Observe for signs of systemic inflammation.
+
+**Management Plan:** Initiate NSAID therapy as prescribed. Monitor for exacerbations, including pain and swelling. Consider referral to rheumatologist for further evaluation and potential disease-modifying oral medications.  Continue physical therapy to maintain joint mobility."

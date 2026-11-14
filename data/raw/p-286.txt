@@ -1,0 +1,13 @@
+--- RECORD START ---
+PATIENT IDENTIFIER: MRN:000286
+PATIENT NAME: Maria Miller
+DOB: 1956-01-10
+GENDER: male
+ENCOUNTER REF: ENC-286-1 (EMER)
+COLLECTION DATE: 2024-08-23
+TEST PANEL: Chest Radiography (CXR 2-Views) (LOINC: 24648-8)
+FINDINGS:
+Chest Radiography (CXR 2-Views) abnormal findings: Community-Acquired Lobar Pneumonia. Key indicators: dense consolidation, purulent sputum.
+CLINICAL IMPRESSION:
+Confirmed diagnosis of Community-Acquired Lobar Pneumonia.
+--- RECORD END ---

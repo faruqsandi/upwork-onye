@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN 216,Chloe Kelly,1988-10-20,F,ENC-216-1,IMP,2024-01-10T09:00:00Z,Neurology Inpatient Assessment,"## Patient: Chloe
+
+**Date:** October 26, 2023
+
+**HPI:**  Chloe is a 36-year-old female presenting with an acute ischemic stroke of the left MCA territory. She exhibits restricted diffusion, suggestive of significant cerebral edema and potential secondary injury. Aphasia is present, impacting her language comprehension and expression. Carotid stenosis is noted, potentially contributing to the stroke’s severity.  Neurological examination reveals a focal deficit in the left hemisphere, with assessment of motor function and speech.
+
+**Physical Exam:**  Vital signs are stable.  Patient appears alert but confused.  Skin is pale and warm.  No obvious neurological deficits observed at this time.
+
+**Management Plan:**  Initiate intravenous hypertonic saline for cerebral"

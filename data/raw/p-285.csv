@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN-000285,Marcus 'Mar' Chen,07/20/1995,M,ENC-285-1,AMB,2024-10-07T09:00:00Z,Endocrine Outpatient Progress Note,"## Marcus – Patient Progress
+
+**Date:** October 26, 2023
+
+**HPI:** Mr. Marcus presents with uncontrolled Type 2 Diabetes, evidenced by elevated HbA1c (over 10%) and peripheral neuropathy symptoms including foot tingling. He is currently on metformin therapy.  Recent ophthalmological examination reveals diabetic retinopathy requiring ongoing monitoring and potential management strategies.
+
+**Physical Exam:** Neurological exam unremarkable except for mild peripheral sensory deficits. Peripheral pulses are present but weak. Skin appears dry and intact.
+
+**Management Plan:** Continue current metformin regimen with adjustments as needed based on HbA1c trends.  Initiate a comprehensive foot assessment program focusing on neuropathy management, including regular podiatric exams and potential referral to a specialist if symptoms worsen. Monitor for progression"

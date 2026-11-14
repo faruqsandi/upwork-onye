@@ -1,0 +1,34 @@
+{
+  "patient_id": "P-278",
+  "MRN": "MRN 278",
+  "full_name": "Amina 'Ami' Hayes",
+  "birth_date": "1969-06-19",
+  "gender_code": "UNKNOWN",
+  "encounter": {
+    "encounter_id": "ENC-278-1",
+    "class": "IMP",
+    "period_start": "2024-07-05T09:00:00Z",
+    "period_end": "2024-07-05T10:30:00Z",
+    "reason": "Acute Cholecystitis with symptomatic cholelithiasis"
+  },
+  "documents": [
+    {
+      "doc_id": "DOC-278-A",
+      "title": "Gastroenterology Consultation Note",
+      "type_code": "34108-1",
+      "date": "2024-07-05T10:00:00Z",
+      "content": "## Patient: Amina\n\n**Date:** October 26, 2023\n\n**HPI:** 55-year-old female presenting with acute cholecystitis, evidenced by gallbladder wall thickening, symptomatic cholelithiasis.  Reports pain localized to right upper quadrant, radiating to left flank. Murphy\u2019s sign present upon palpation.  Patient states recent history of biliary obstruction.\n\n**Physical Exam:** Vital signs stable; abdominal examination reveals tenderness to palpation in the RUQ region.  Assess for guarding and rebound tenderness. No obvious peritonitis.\n\n**Management Plan:** Laparoscopic cholecystectomy performed, achieving complete gallbladder resection and removal of symptomatic cholelithiasis.  Antibiotics initiated postoperatively as prescribed.  Patient educated on pain",
+      "mime_type": "text/plain"
+    }
+  ],
+  "diagnostics": [
+    {
+      "report_id": "DIAG-278-A",
+      "test_name": "Right Upper Quadrant Abdominal Ultrasound",
+      "loinc_code": "24331-1",
+      "effective_date": "2024-07-05",
+      "conclusion": "Right Upper Quadrant Abdominal Ultrasound abnormal findings: Acute Cholecystitis with symptomatic cholelithiasis. Key indicators: gallbladder wall thickening, cholelithiasis."
+    }
+  ],
+  "specialty": "Gastroenterology"
+}

@@ -1,0 +1,13 @@
+--- RECORD START ---
+PATIENT IDENTIFIER: MRN:000202
+PATIENT NAME: Sophia Sterling
+DOB: 1971-03-12
+GENDER: non-binary
+ENCOUNTER REF: ENC-202-1 (IMP)
+COLLECTION DATE: 2024-09-28
+TEST PANEL: Chest Radiography (CXR 2-Views) (LOINC: 24648-8)
+FINDINGS:
+Chest Radiography (CXR 2-Views) abnormal findings: Community-Acquired Lobar Pneumonia. Key indicators: dense consolidation, purulent sputum.
+CLINICAL IMPRESSION:
+Confirmed diagnosis of Community-Acquired Lobar Pneumonia.
+--- RECORD END ---

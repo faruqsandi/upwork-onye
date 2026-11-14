@@ -1,0 +1,8 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN-000294,David Adeyemi,02/07/1960,cis female,ENC-294-1,AMB,2023-11-11T09:00:00Z,Orthopedic Surgery Clinic Note,"## David, 64yo Female
+
+**HPI:** Patient presents with progressive severe osteoarthritis of the right knee, evidenced by bone-on-bone medial narrowing, subchondral sclerosis, and a high risk for total knee arthroplasty (TKA). Pain is constant and exacerbated with activity. Limited range of motion in flexion and extension.
+
+**Physical Exam:**  Range of motion limited; palpable crepitus noted.  Joint effusion present. Palpable bony tenderness over the medial joint line.
+
+**Management Plan:** Initiate conservative management including weight loss, physical therapy focusing on strengthening and range of motion exercises, and radiographic evaluation to assess TKA candidacy and guide treatment decisions. Consider surgical consultation for TKA planning."

@@ -1,0 +1,34 @@
+{
+  "patient_id": "P-212",
+  "MRN": "MRN:000212",
+  "full_name": "Sarah Kelly",
+  "birth_date": "05/22/1989",
+  "gender_code": "cis-male",
+  "encounter": {
+    "encounter_id": "ENC-212-1",
+    "class": "EMER",
+    "period_start": "2024-11-11T09:00:00Z",
+    "period_end": "2024-11-11T10:30:00Z",
+    "reason": "Acute Anterior STEMI with critical troponin elevation"
+  },
+  "documents": [
+    {
+      "doc_id": "DOC-212-A",
+      "title": "Emergency Department Admission Note",
+      "type_code": "34108-1",
+      "date": "2024-11-11T10:00:00Z",
+      "content": "## Patient: Sarah\n\n**Date:** October 26, 2023\n\n**HPI:** 35yo male presenting with acute anterior STEMI (ST elevation V1-V4), accompanied by significant chest pain, diaphoresis, and a markedly elevated troponin level.  Patient reports experiencing severe dyspnea.\n\n**Physical Exam:** Vital signs stable, but exhibiting signs of anxiety and distress. Cardiovascular examination reveals tachycardia and hypotension. Auscultation reveals crackles in the right lower lobe.\n\n**Management Plan:** Immediate initiation of intravenous fluids (crystalloid), oxygen via nasal cannula, and administration of epinephrine to mitigate myocardial ischemia.  Continuous cardiac monitoring with pacing as needed.  Consider transfer to a higher level of care with consideration for thrombolysis pending further",
+      "mime_type": "text/plain"
+    }
+  ],
+  "diagnostics": [
+    {
+      "report_id": "DIAG-212-A",
+      "test_name": "Cardiac Troponin I",
+      "loinc_code": "10839-9",
+      "effective_date": "2024-11-11",
+      "conclusion": "Cardiac Troponin I abnormal findings: Acute Anterior STEMI with critical troponin elevation. Key indicators: chest pain, diaphoresis."
+    }
+  ],
+  "specialty": "Cardiology"
+}

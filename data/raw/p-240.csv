@@ -1,0 +1,8 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN-000240,MATEO O'CONNOR,07/23/1999,female,ENC-240-1,EMER,2023-10-07T09:00:00Z,Neurology Inpatient Assessment,"## Patient: Mateo, 25yo Female
+
+**HPI:** Acute ischemic stroke of the left major arcuate artery (MCA) territory. Patient presents with restricted diffusion, indicating significant cerebral ischemia.  Clinical presentation includes aphasia – difficulty speaking – and carotid stenosis, suggesting potential vascular complications. Neurological examination reveals deficits affecting language and motor function.
+
+**Physical Exam:** Vital signs stable. Alert and oriented to person, place, and time. No obvious neurological deficits noted beyond the initial assessment.  Skin exam unremarkable.
+
+**Management Plan:** Initiate intravenous thrombolysis (IV tPA) immediately. Monitor for complications such as bleeding or worsening neurological deficits. Continue supportive care including oxygen therapy and management of carotid stenosis with potential intervention. Close monitoring of blood pressure and cerebral perfusion is crucial"

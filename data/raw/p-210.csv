@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN-000210,Marcus Hayes,1984-09-17,F,ENC-210-1,EMER,2023-01-19T09:00:00Z,Orthopedic Surgery Clinic Note,"## Marcus – Patient Progress
+
+**Date:** October 26, 2023
+
+**HPI:** Mr. Marcus presents with a significant and worsening knee pain following a recent MRI revealing severe osteoarthritic changes in the right knee. He reports intermittent locking and clicking sensations, limiting his activity levels.  The bone-on-bone medial narrowing is prominent, alongside subchondral sclerosis indicating cartilage degradation.  He’s considered a strong candidate for total knee arthroplasty to address the debilitating pain and functional limitations.
+
+**Physical Exam:** Range of motion limited due to pain. Palpable osteophytes noted.  Tenderness to palpation over the medial joint line. Gait is affected with limping.
+
+**Management Plan:** Initiate physical therapy focusing on strengthening,"

@@ -1,0 +1,13 @@
+--- RECORD START ---
+PATIENT IDENTIFIER: MRN:000220
+PATIENT NAME: Robert Chen
+DOB: 1969-12-15
+GENDER: M
+ENCOUNTER REF: ENC-220-1 (IMP)
+COLLECTION DATE: 2023-05-08
+TEST PANEL: Carcinoembryonic Antigen (CEA) and Surveillance CT (LOINC: 24323-8)
+FINDINGS:
+Carcinoembryonic Antigen (CEA) and Surveillance CT abnormal findings: Colorectal Adenocarcinoma Post-Resection Surveillance. Key indicators: status-post hemicolectomy, CEA 1.6 ng/mL.
+CLINICAL IMPRESSION:
+Confirmed diagnosis of Colorectal Adenocarcinoma Post-Resection Surveillance.
+--- RECORD END ---

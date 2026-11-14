@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN:000255,Amina Dubois,07/15/1973,cis-male,ENC-255-1,AMB,2023-02-02T09:00:00Z,Rheumatology Progress Note,"## Patient: Amina
+
+**Date:** October 26, 2023
+
+**HPI:** 51-year-old male presenting with seropositive Rheumatoid Arthritis (RA) exhibiting erosive joint changes. Reports morning stiffness exceeding 1 hour and symmetric MCP joint swelling. Anti-CCP levels are elevated at 250 U/mL.
+
+**Physical Exam:**  Patient demonstrates positive morning stiffness, bilateral MCP joint swelling, and normal range of motion. Palpation reveals tenderness in the affected joints.
+
+**Management Plan:** Initiate NSAIDs as prescribed for pain management. Recommend physical therapy focusing on range of motion exercises and strengthening to mitigate joint instability. Monitor anti-CCP levels monthly and adjust medication accordingly. Consider referral to rheumatologist for further evaluation and"

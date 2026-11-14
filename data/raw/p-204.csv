@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN:000204,David Patel,11/09/1943,non-binary,ENC-204-1,IMP,2023-01-23T09:00:00Z,Neurology Inpatient Assessment,"## Patient: David
+
+**Date:** October 26, 2023
+
+**HPI:** Mr. David presents with an acute ischemic stroke of the left major arcuate artery (MCA) territory. He reports experiencing sudden onset of severe headache and difficulty speaking.  He exhibits restricted diffusion, a characteristic neurological finding suggestive of MCA infarction.  Aphasia is present, impacting his ability to articulate coherent sentences. Carotid stenosis is noted on examination.
+
+**Physical Exam:** Vital signs stable. Neurological exam reveals slurred speech, weakness in the left arm, and difficulty with comprehension. Facial droop is present.  Motor assessment shows diminished strength in the affected limb.
+
+**Management Plan:** Initiated intravenous thrombolysis (IV tPA) immediately following presentation."

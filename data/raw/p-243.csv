@@ -1,0 +1,8 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN-000243,Mateo Morales,05/04/1946,cis female,ENC-243-1,EMER,2024-05-02T09:00:00Z,Rheumatology Progress Note,"## Patient: Mateo, 78yo cis female
+
+**HPI:** Mr. Mateo presents with a persistent morning stiffness of greater than one hour in the left median MCP joint, accompanied by symmetric swelling and elevated anti-CCP levels (250 U/mL).  Reports experiencing significant pain during movement.
+
+**Physical Exam:**  Assessment reveals mild tenderness to palpation in the MCP joint.  Range of motion limited due to pain.  Neurological examination unremarkable.
+
+**Management Plan:**  Initiate NSAID regimen as prescribed, with monitoring for adverse effects. Consider intra-articular injection of hyaluronic acid for symptomatic relief and potential improvement in joint function.  Referral to rheumatologist for further evaluation and consideration of disease-modifying agents if appropriate."

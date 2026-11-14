@@ -1,0 +1,8 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN:000222,Zara Kelly,1957.08.26,M,ENC-222-1,IMP,2023-06-05T09:00:00Z,Orthopedic Surgery Clinic Note,"## Patient: Zara – Tricompartmental Osteoarthritis of Right Knee
+
+**HPI:**  Patient presents with significant pain and limited range of motion in the right knee following a recent diagnosis of severe osteoarthritis. History reveals progressive symptoms over the past year, exacerbated by activity. Physical examination demonstrates bony tenderness to palpation, limited flexion, and a palpable effusion.  Imaging confirms bone-on-bone medial narrowing and subchondral sclerosis.  Considering this presentation, a total knee arthroplasty is being considered as a viable treatment option.
+
+**Physical Exam:**  Patient reports pain with activity, limited range of motion, and swelling.  Joint line tenderness noted.
+
+**Management Plan:**  Initiate conservative management including weight loss counseling, physical therapy focusing on strengthening and range of motion exercises"

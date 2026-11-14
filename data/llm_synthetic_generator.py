@@ -25,7 +25,7 @@ from typing import Any, Dict, List, Optional
 import httpx
 
 DEFAULT_BASE_URL = "http://127.0.0.1:1234/v1"
-DEFAULT_MODEL = "llama-3.2-1b-instruct"
+DEFAULT_MODEL = "google/gemma-3-1b"
 
 # Diverse clinical archetypes for generation
 CLINICAL_SPECIALTIES = [
@@ -164,9 +164,9 @@ class LLMSyntheticGenerator:
                     print(f"Available models: {model_ids}")
                     if self.model not in model_ids and model_ids:
                         # Auto-select the first available model under 8B
-                        preferred = [m for m in model_ids if any(k in m for k in ["llama", "gemma", "qwen", "1b", "2b", "3b", "4b", "8b"])]
+                        preferred = [m for m in model_ids if any(k in m for k in ["gemma", "llama", "qwen", "1b", "2b", "3b", "4b", "8b"])]
                         self.model = preferred[0] if preferred else model_ids[0]
-                        print(f"Selected active model: {self.model}")
+                    print(f"Selected active model: {self.model}")
                     return True
         except Exception as e:
             print(f"Warning: Could not connect to LM Studio at {self.base_url}: {e}")
@@ -176,10 +176,10 @@ class LLMSyntheticGenerator:
     def generate_clinical_note_content(self, patient_name: str, age: int, gender: str, archetype: Dict[str, Any]) -> str:
         """Prompt local model to synthesize rich clinical note and diagnostic findings."""
         prompt = (
-            f"Generate a realistic EHR clinical progress note for patient {patient_name}, "
-            f"{age}yo {gender}, presenting with {archetype['condition']}. "
-            f"Include symptoms ({', '.join(archetype['keywords'])}), physical exam findings, and management plan. "
-            f"Output between 50 to 90 words of realistic medical prose."
+            f"Patient: {patient_name}, {age}yo {gender}. "
+            f"Condition: {archetype['condition']}. "
+            f"Key features: {', '.join(archetype['keywords'])}. "
+            f"Document concise HPI, physical exam findings, and management plan in 60-90 words."
         )
 
         try:
@@ -190,10 +190,10 @@ class LLMSyntheticGenerator:
                     json={
                         "model": self.model,
                         "messages": [
-                            {"role": "system", "content": "You are an expert physician documenting in Epic EHR. Output concise clinical text only."},
+                            {"role": "system", "content": "You are an expert physician documenting in Epic EHR. Output ONLY raw clinical progress note body without introductory remarks, markdown headers, or conversational text."},
                             {"role": "user", "content": prompt},
                         ],
-                        "temperature": 0.3,
+                        "temperature": 0.2,
                         "max_tokens": 160,
                     },
                 )
@@ -202,7 +202,9 @@ class LLMSyntheticGenerator:
                     # Clean out potential thought tags or code blocks
                     text = re.sub(r"<think>[\s\S]*?</think>", "", text).strip()
                     text = re.sub(r"```[\s\S]*?```", "", text).strip()
-                    if len(text.split()) >= 20:
+                    text = re.sub(r"^(Okay|Here is|Certainly|Sure)[^\n]*\n*", "", text, flags=re.IGNORECASE).strip()
+                    refusal_indicators = ["cannot provide", "cannot generate", "unable to", "as an ai", "apologize", "i cannot"]
+                    if len(text.split()) >= 20 and not any(r in text.lower() for r in refusal_indicators):
                         return text
         except Exception:
             pass

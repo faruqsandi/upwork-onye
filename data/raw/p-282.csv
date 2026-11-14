@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+ 282 ,Liam Vance,1999-06-19,non-binary,ENC-282-1,IMP,2024-12-09T09:00:00Z,Orthopedic Surgery Clinic Note,"## Patient: Liam
+
+**Date:** October 26, 2023
+
+**HPI:** Mr. Liam presents with a significant worsening of his right knee pain following recent activity. Reports of crepitus and limited range of motion. History reveals severe osteoarthritis with prominent medial narrowing and subchondral sclerosis.  Patient is considered for total knee arthroplasty due to the extent of the pathology.
+
+**Physical Exam:** Range of motion restricted, with audible clicking during flexion and extension. Palpable osteophyte tenderness on palpation.  Skin examination shows signs of inflammation.
+
+**Management Plan:** Initiate physical therapy focusing on strengthening and range of motion exercises. Prescribe NSAIDs for pain control. Discuss potential benefits and risks of total knee arthroplasty. Schedule follow"

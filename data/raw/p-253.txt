@@ -1,0 +1,13 @@
+--- RECORD START ---
+PATIENT IDENTIFIER: MRN 253
+PATIENT NAME: Maria Dubois
+DOB: 1967.07.12
+GENDER: UNKNOWN
+ENCOUNTER REF: ENC-253-1 (EMER)
+COLLECTION DATE: 2023-11-03
+TEST PANEL: B-Type Natriuretic Peptide (BNP) (LOINC: 30934-4)
+FINDINGS:
+B-Type Natriuretic Peptide (BNP) abnormal findings: Acute Decompensated Congestive Heart Failure. Key indicators: BNP > 1500 pg/mL, orthopnea.
+CLINICAL IMPRESSION:
+Confirmed diagnosis of Acute Decompensated Congestive Heart Failure.
+--- RECORD END ---

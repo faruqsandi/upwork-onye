@@ -1,0 +1,8 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN-000276,Liam Chen,1965-08-05,female,ENC-276-1,AMB,2024-12-05T09:00:00Z,Neurology Inpatient Assessment,"## Patient: Liam, 59yo Female
+
+**HPI:** Acute ischemic stroke of the left major arcuate artery (MCA) territory.  Patient presents with restricted diffusion, focal neurological deficits including aphasia and carotid stenosis.  Significant neurological impairment is noted.
+
+**Physical Exam:**  Alert and oriented to person, place, and time.  Mild neck stiffness present.  Assess for motor function, cranial nerve examination, and gait.  Neurological exam reveals weakness in the left arm and leg, with afferent deficits.
+
+**Management Plan:**  Initiate intravenous hypertonic saline infusion. Monitor vital signs closely. Consider thrombolysis based on clinical presentation and risk factors.  Manage carotid stenosis with possible stent placement or embolization.  Continue supportive care including respiratory management and"

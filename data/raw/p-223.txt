@@ -1,0 +1,13 @@
+--- RECORD START ---
+PATIENT IDENTIFIER: 223
+PATIENT NAME: Marcus O'Connor
+DOB: 08/03/1954
+GENDER: M
+ENCOUNTER REF: ENC-223-1 (IMP)
+COLLECTION DATE: 2023-06-23
+TEST PANEL: Comprehensive Thyroid Panel with TPO Antibodies (LOINC: 11579-0)
+FINDINGS:
+Comprehensive Thyroid Panel with TPO Antibodies abnormal findings: Primary Hypothyroidism secondary to Hashimoto's Thyroiditis. Key indicators: TSH 32 uIU/mL, Free T4 0.35 ng/dL.
+CLINICAL IMPRESSION:
+Confirmed diagnosis of Primary Hypothyroidism secondary to Hashimoto's Thyroiditis.
+--- RECORD END ---

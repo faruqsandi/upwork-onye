@@ -1,0 +1,13 @@
+--- RECORD START ---
+PATIENT IDENTIFIER: MRN:000235
+PATIENT NAME: Chloe Sterling
+DOB: 1962.06.10
+GENDER: F
+ENCOUNTER REF: ENC-235-1 (EMER)
+COLLECTION DATE: 2024-05-12
+TEST PANEL: Comprehensive Thyroid Panel with TPO Antibodies (LOINC: 11579-0)
+FINDINGS:
+Comprehensive Thyroid Panel with TPO Antibodies abnormal findings: Primary Hypothyroidism secondary to Hashimoto's Thyroiditis. Key indicators: TSH 32 uIU/mL, Free T4 0.35 ng/dL.
+CLINICAL IMPRESSION:
+Confirmed diagnosis of Primary Hypothyroidism secondary to Hashimoto's Thyroiditis.
+--- RECORD END ---

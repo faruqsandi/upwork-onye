@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN 267,Amina Johansson,1944.06.21,UNKNOWN,ENC-267-1,IMP,2024-09-27T09:00:00Z,Rheumatology Progress Note,"## Patient: Amina
+
+**Date:** October 26, 2023
+
+**HPI:** Elderly female presenting with seropositive rheumatoid arthritis (RA) exhibiting erosive joint changes. Reports morning stiffness exceeding 1 hour, symmetric MCP joint swelling, and elevated anti-CCP levels at 250 U/mL.
+
+**Physical Exam:**  Patient demonstrates significant morning stiffness, with palpable joint swelling on the left MCP. Range of motion is limited in the affected limb.  Neurological examination unremarkable.
+
+**Management Plan:** Initiate oral steroids for symptom control. Recommend physical therapy focusing on range of motion and strengthening exercises. Monitor anti-CCP levels monthly to assess response to treatment. Consider referral to rheumatologist for further evaluation and potential disease modification strategies."

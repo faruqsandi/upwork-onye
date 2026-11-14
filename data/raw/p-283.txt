@@ -1,0 +1,13 @@
+--- RECORD START ---
+PATIENT IDENTIFIER: MRN:000283
+PATIENT NAME: Mateo 'Mat' Thorne
+DOB: 11/19/1967
+GENDER: cis female
+ENCOUNTER REF: ENC-283-1 (AMB)
+COLLECTION DATE: 2024-10-12
+TEST PANEL: Comprehensive Thyroid Panel with TPO Antibodies (LOINC: 11579-0)
+FINDINGS:
+Comprehensive Thyroid Panel with TPO Antibodies abnormal findings: Primary Hypothyroidism secondary to Hashimoto's Thyroiditis. Key indicators: TSH 32 uIU/mL, Free T4 0.35 ng/dL.
+CLINICAL IMPRESSION:
+Confirmed diagnosis of Primary Hypothyroidism secondary to Hashimoto's Thyroiditis.
+--- RECORD END ---

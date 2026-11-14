@@ -1,0 +1,34 @@
+{
+  "patient_id": "P-218",
+  "MRN": " 218 ",
+  "full_name": "Robert Nakamura",
+  "birth_date": "05/21/1993",
+  "gender_code": "non-binary",
+  "encounter": {
+    "encounter_id": "ENC-218-1",
+    "class": "AMB",
+    "period_start": "2023-11-21T09:00:00Z",
+    "period_end": "2023-11-21T10:30:00Z",
+    "reason": "Acute Cholecystitis with symptomatic cholelithiasis"
+  },
+  "documents": [
+    {
+      "doc_id": "DOC-218-A",
+      "title": "Gastroenterology Consultation Note",
+      "type_code": "34108-1",
+      "date": "2023-11-21T10:00:00Z",
+      "content": "## Patient: Robert\n\n**Date:** 2023-10-27\n\n**HPI:** Mr. Robert presents with acute cholecystitis, evidenced by gallbladder wall thickening, symptomatic cholelithiasis. He reports a history of recent abdominal pain and elevated white blood cell count. Physical exam reveals tenderness to palpation in the right upper quadrant.\n\n**Physical Exam:**  Right upper quadrant tenderness, rebound tenderness present. Bowel sounds are normal. Auscultation reveals bowel sounds diminished.\n\n**Management Plan:** Laparoscopic cholecystectomy performed with successful removal of gallstones and gallbladder wall repair. Antibiotics initiated postoperatively for infection control. Patient monitored closely for complications.",
+      "mime_type": "text/plain"
+    }
+  ],
+  "diagnostics": [
+    {
+      "report_id": "DIAG-218-A",
+      "test_name": "Right Upper Quadrant Abdominal Ultrasound",
+      "loinc_code": "24331-1",
+      "effective_date": "2023-11-21",
+      "conclusion": "Right Upper Quadrant Abdominal Ultrasound abnormal findings: Acute Cholecystitis with symptomatic cholelithiasis. Key indicators: gallbladder wall thickening, cholelithiasis."
+    }
+  ],
+  "specialty": "Gastroenterology"
+}

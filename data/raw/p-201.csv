@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN 201,Amina Thorne,1987.07.10,male,ENC-201-1,IMP,2024-05-05T09:00:00Z,Endocrine Outpatient Progress Note,"## Patient: Amina
+
+**Date:** October 26, 2023
+
+**HPI:** 37-year-old male presenting with uncontrolled Type 2 Diabetes mellitus, evidenced by HbA1c > 10%.  Reports intermittent foot tingling and peripheral neuropathy. Currently taking metformin for glycemic control.  Examination reveals mild ankle edema and slightly diminished pulses in the lower extremities.
+
+**Physical Exam:** Vital signs within normal limits. Peripheral examination shows slight skin changes and limited range of motion in the feet. No acute tenderness noted.
+
+**Management Plan:** Continue current metformin regimen. Monitor HbA1c closely. Prescribe oral hypoglycemic agents as needed to achieve target glucose levels.  Refer to podiatrist for comprehensive foot care, including assessment and management"

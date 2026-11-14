@@ -1,0 +1,8 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+ 249 ,Marcus Miller,01/04/1985,cis female,ENC-249-1,AMB,2024-01-28T09:00:00Z,Endocrine Outpatient Progress Note,"## Marcus – Patient Progress
+
+**HPI:** 39yo female presenting with uncontrolled Type 2 Diabetes (HbA1c > 10%), peripheral neuropathy manifesting as foot tingling. Current medication regimen includes metformin. History of retinopathy requires ongoing monitoring and management.
+
+**Physical Exam:** Neurological examination reveals mild ankle reflexes, with intermittent foot tingling noted. Peripheral pulses are present but diminished. Skin exam unremarkable.
+
+**Management Plan:** Continue current metformin dosage. Initiate routine foot care including daily inspection and assessment for signs of neuropathy. Monitor HbA1c monthly. Referral to ophthalmologist for continued retinal evaluation and management. Consider referral to podiatrist for further assessment and potential intervention if neuropathy progresses significantly."

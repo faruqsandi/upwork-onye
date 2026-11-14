@@ -1,0 +1,13 @@
+--- RECORD START ---
+PATIENT IDENTIFIER: MRN:000256
+PATIENT NAME: Zara O'Connor
+DOB: 1991-09-18
+GENDER: UNKNOWN
+ENCOUNTER REF: ENC-256-1 (AMB)
+COLLECTION DATE: 2023-08-22
+TEST PANEL: Carcinoembryonic Antigen (CEA) and Surveillance CT (LOINC: 24323-8)
+FINDINGS:
+Carcinoembryonic Antigen (CEA) and Surveillance CT abnormal findings: Colorectal Adenocarcinoma Post-Resection Surveillance. Key indicators: status-post hemicolectomy, CEA 1.6 ng/mL.
+CLINICAL IMPRESSION:
+Confirmed diagnosis of Colorectal Adenocarcinoma Post-Resection Surveillance.
+--- RECORD END ---

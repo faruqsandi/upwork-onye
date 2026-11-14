@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN:000234,Eleanor Pendelton,10/23/1945,cis female,ENC-234-1,EMER,2024-01-23T09:00:00Z,Orthopedic Surgery Clinic Note,"## Eleanor – Patient Note
+
+**Date:** October 26, 2023
+
+**HPI:** Elderly female (79yo) presenting with progressive severe osteoarthritis of the right knee. Significant bone-on-bone medial narrowing and subchondral sclerosis noted on physical examination.  Patient expresses concern regarding potential total knee arthroplasty due to pain and functional limitations.
+
+**Physical Exam:** Limited range of motion in the right knee, palpable tenderness to palpation at the medial joint line.  Assess for gait instability.
+
+**Management Plan:** Recommend evaluation by orthopedic surgeon for definitive diagnosis and treatment planning. Discuss potential options including total knee arthroplasty with consideration of patient’s overall health and functional goals. Initiate pain management protocol as needed."

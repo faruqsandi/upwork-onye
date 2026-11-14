@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN:000264,Sophia O'Connor,09/22/1979,female,ENC-264-1,IMP,2023-03-19T09:00:00Z,Neurology Inpatient Assessment,"## Patient: Sophia
+
+**Date:** 2023-10-27
+
+**HPI:** Ms. Sophia, 45yo female, presented with acute ischemic stroke of the left MCA territory.  She exhibits restricted diffusion, suggestive of significant cerebral edema and potential secondary injury. Aphasia is present, impacting language comprehension and expression. Carotid stenosis is noted, potentially contributing to secondary complications. Neurological examination reveals a mild level of impairment in motor function.
+
+**Physical Exam:** Vital signs stable. Alert and oriented to person and place.  Skin appears pale and moist.  Neurological exam shows weakness in the left side of the body with slowness of movement.  No focal deficits noted.
+
+**Management Plan:** Initiated intravenous hypertonic saline infusion for"

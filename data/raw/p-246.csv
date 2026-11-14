@@ -1,0 +1,10 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN-000246,Marcus 'Mar' Hayes,09/01/1982,cis female,ENC-246-1,EMER,2023-11-14T09:00:00Z,Orthopedic Surgery Clinic Note,"## Marcus – Patient Note
+
+**Date:** 2023-10-27
+
+**HPI:** Patient presents with severe pain and limited range of motion in the right knee following a diagnosis of total knee arthroplasty candidate due to bone-on-bone medial narrowing and subchondral sclerosis.  Patient reports chronic pain exacerbated by activity.
+
+**Physical Exam:**  Range of motion restricted, palpable tenderness to palpation at the medial joint line. Gait is hesitant.  Neurological examination unremarkable.
+
+**Management Plan:** Initiate conservative treatment including weight management, physical therapy focusing on strengthening and range of motion exercises, and potential intra-articular injections.  Monitor for signs of complications such as osteomyelitis or infection.  Discuss surgical options with patient regarding risks and benefits"

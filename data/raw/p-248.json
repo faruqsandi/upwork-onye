@@ -1,0 +1,34 @@
+{
+  "patient_id": "P-248",
+  "MRN": "MRN-000248",
+  "full_name": "Alexander 'Ale' Al-Mansoor",
+  "birth_date": "01/22/1978",
+  "gender_code": "cis-male",
+  "encounter": {
+    "encounter_id": "ENC-248-1",
+    "class": "AMB",
+    "period_start": "2023-01-25T09:00:00Z",
+    "period_end": "2023-01-25T10:30:00Z",
+    "reason": "Acute Anterior STEMI with critical troponin elevation"
+  },
+  "documents": [
+    {
+      "doc_id": "DOC-248-A",
+      "title": "Emergency Department Admission Note",
+      "type_code": "34108-1",
+      "date": "2023-01-25T10:00:00Z",
+      "content": "## Alexander - Patient Progress\n\n**Date:** October 26, 2023\n\n**HPI:** Acute anterior STEMI presenting with chest pain (10/15), diaphoresis, ST elevation at V1-V4, and catheterization performed.  Patient is currently stable on telemetry, with elevated troponin levels necessitating immediate transfer to cardiac ICU. Vital signs are stable but monitoring continues.\n\n**Physical Exam:**  Alert and oriented, but exhibiting significant anxiety and dyspnea.  Peripheral pulses weak and diminished.  Respiratory effort labored.\n\n**Management Plan:**  Initiated transfer to Cardiac ICU for further management including vasopressors, oxygen support, and continued troponin monitoring.  Discussed potential for emergent percutaneous coronary intervention (PCI) pending assessment",
+      "mime_type": "text/plain"
+    }
+  ],
+  "diagnostics": [
+    {
+      "report_id": "DIAG-248-A",
+      "test_name": "Cardiac Troponin I",
+      "loinc_code": "10839-9",
+      "effective_date": "2023-01-25",
+      "conclusion": "Cardiac Troponin I abnormal findings: Acute Anterior STEMI with critical troponin elevation. Key indicators: chest pain, diaphoresis."
+    }
+  ],
+  "specialty": "Cardiology"
+}
