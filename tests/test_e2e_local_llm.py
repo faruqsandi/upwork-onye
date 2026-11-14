@@ -43,19 +43,13 @@ class TestEndToEndLocalLLMPipeline:
             assert len(cohort) == 3
             generator.export_all_formats(cohort, output_dir=data_dir)
 
-            assert (data_dir / "simulated_ehr_export.json").exists()
-            assert (data_dir / "scanned_notes.csv").exists()
-            assert (data_dir / "lab_results.txt").exists()
+            assert len(list(data_dir.glob("*.*"))) == 3
 
             # ---------------------------------------------------------
             # Step 2: Data Ingestion & Cleaning
             # ---------------------------------------------------------
             pipeline = IngestionPipeline()
-            cleaned_patients = pipeline.ingest_sources(
-                json_path=data_dir / "simulated_ehr_export.json",
-                csv_path=data_dir / "scanned_notes.csv",
-                txt_path=data_dir / "lab_results.txt",
-            )
+            cleaned_patients = pipeline.ingest_directory(data_dir)
             assert len(cleaned_patients) >= 3
 
             for p in cleaned_patients:

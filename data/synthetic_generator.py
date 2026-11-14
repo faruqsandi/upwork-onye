@@ -1,27 +1,25 @@
-"""Synthetic EHR Data Generator.
+"""Synthetic EHR Data Generator (One Record per File).
 
-Generates heterogeneous, messy, realistic EHR datasets across multiple formats:
-1. data/raw/simulated_ehr_export.json (Simulated Epic EHR dump)
-2. data/raw/scanned_notes.csv (Clinical encounter notes & consults)
-3. data/raw/lab_results.txt (Unstructured/semi-structured lab reports)
+Generates individual, heterogeneous, realistic EHR records across:
+- JSON (.json) files
+- CSV (.csv) files
+- Plain text (.txt) files
 
-Includes edge cases:
-- Inconsistent date formats (ISO, US standard, written, epoch)
-- Dirty/inconsistent MRNs ('MRN-1001', '1001', 'MRN:001001')
-- Diverse gender strings ('M', 'female', 'cis-male', 'U', missing)
-- Duplicate records with conflicting non-identifying fields
-- Missing timestamps, trailing whitespaces, heterogeneous column names
+Each patient record is saved as its own standalone file in data/raw/.
 """
 
+import csv
 import json
 from pathlib import Path
+from typing import Any, Dict, List
 
 DATA_DIR = Path(__file__).resolve().parent / "raw"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-# 1. JSON Export Dataset (Simulated Epic Clarity / Caboodle export)
-JSON_DATA = [
+# 13 Base clinical records representing varied conditions and edge cases
+BASE_RECORDS: List[Dict[str, Any]] = [
     {
+        "format": "json",
         "patient_id": "P-101",
         "MRN": "MRN-000101",
         "full_name": "Eleanor Vance",
@@ -54,6 +52,7 @@ JSON_DATA = [
         ],
     },
     {
+        "format": "json",
         "patient_id": "P-102",
         "MRN": " 102 ",  # Dirty whitespace and bare number
         "full_name": "Marcus Aurelius Thorne",
@@ -86,6 +85,7 @@ JSON_DATA = [
         ],
     },
     {
+        "format": "json",
         "patient_id": "P-103",
         "MRN": "MRN:000103",
         "full_name": "SARAH CHEN",  # All uppercase
@@ -118,6 +118,7 @@ JSON_DATA = [
         ],
     },
     {
+        "format": "json",
         "patient_id": "P-104",
         "MRN": "MRN 104",  # Space separator
         "full_name": "Robert 'Bob' Sterling",  # Nickname quotes
@@ -150,7 +151,7 @@ JSON_DATA = [
         ],
     },
     {
-        # Edge Case Patient: duplicate conflict candidate and dirty fields
+        "format": "json",
         "patient_id": "P-105",
         "MRN": "000105",
         "full_name": "Amina Al-Mansoor",
@@ -182,100 +183,171 @@ JSON_DATA = [
             }
         ],
     },
+    {
+        "format": "csv",
+        "patient_id": "P-106",
+        "mrn": "MRN-000106",
+        "name": "David K. Miller",
+        "dob": "1972-04-19",
+        "gender": "male",
+        "enc_id": "ENC-106-1",
+        "enc_class": "AMB",
+        "enc_date": "2023-10-18 09:00:00",
+        "note_type": "Progress Note",
+        "note_content": "51-year-old male with hypertension and chronic kidney disease stage 3b. eGFR 38 mL/min/1.73m2, serum creatinine 2.1 mg/dL. Potassium stable at 4.6 mEq/L. Blood pressure 142/88. Renal ultrasound shows bilateral cortical thinning without hydronephrosis.",
+    },
+    {
+        "format": "csv",
+        "patient_id": "P-107",
+        "mrn": "MRN:000107",
+        "name": "Maria Rodriguez-Santos",
+        "dob": "12/03/1980",
+        "gender": "F",
+        "enc_id": "ENC-107-1",
+        "enc_class": "AMB",
+        "enc_date": "2024-01-08",
+        "note_type": "Consultation Note",
+        "note_content": "43-year-old female presents with recurrent right upper quadrant colicky pain postprandially. Abdominal ultrasound confirms cholelithiasis with multiple gallstones and mild gallbladder wall thickening (3.5 mm). Referred for elective laparoscopic cholecystectomy.",
+    },
+    {
+        "format": "csv",
+        "patient_id": "P-108",
+        "mrn": " 108 ",
+        "name": "James O'Connor",
+        "dob": "1960-09-05",
+        "gender": "M",
+        "enc_id": "ENC-108-1",
+        "enc_class": "AMB",
+        "enc_date": "2023-11-29T15:00:00Z",
+        "note_type": "Oncology Follow-up",
+        "note_content": "63-year-old male status-post left hemicolectomy for Stage IIA colon adenocarcinoma. Surveillance CT scan of chest/abdomen/pelvis reveals no evidence of local recurrence or distant metastatic disease. CEA level remains within normal limits at 1.8 ng/mL.",
+    },
+    {
+        "format": "csv",
+        "patient_id": "P-109",
+        "mrn": "MRN-000109",
+        "name": "Priya Patel",
+        "dob": "1995-07-22",
+        "gender": "female",
+        "enc_id": "ENC-109-1",
+        "enc_class": "AMB",
+        "enc_date": "2024-02-01 11:30:00",
+        "note_type": "Allergy & Immunology Note",
+        "note_content": "28-year-old female with severe refractory atopic dermatitis and allergic rhinitis. Total serum IgE markedly elevated at 1,450 IU/mL. Initiated on Dupilumab 600mg loading dose followed by 300mg biweekly. Tolerating medication well with partial symptom relief.",
+    },
+    {
+        "format": "csv",
+        "patient_id": "P-110",
+        "mrn": "MRN-000110",
+        "name": "William 'Bill' Hayes",
+        "dob": "1951-11-14",
+        "gender": "cis-male",
+        "enc_id": "ENC-110-1",
+        "enc_class": "AMB",
+        "enc_date": "2023-08-25",
+        "note_type": "Orthopedic Clinic Note",
+        "note_content": "72-year-old male with severe tricompartmental osteoarthritis of right knee. Radiographs reveal bone-on-bone medial compartment joint space narrowing with subchondral sclerosis and osteophyte formation. Scheduled for right total knee arthroplasty.",
+    },
+    {
+        "format": "txt",
+        "patient_id": "P-111",
+        "mrn": "MRN-000111",
+        "name": "Fatima Zahra Haddad",
+        "dob": "1983-05-18",
+        "gender": "female",
+        "enc_ref": "ENC-111-1 (Ambulatory)",
+        "date": "2024-01-22 08:15:00",
+        "panel": "Comprehensive Thyroid Panel (LOINC: 11579-0)",
+        "findings": "Free T4: 0.42 ng/dL [Low, Ref: 0.8 - 1.8 ng/dL]\nTotal T3: 58 ng/dL [Low, Ref: 80 - 200 ng/dL]\nTSH: 28.5 uIU/mL [Severely Elevated, Ref: 0.45 - 4.5 uIU/mL]\nThyroid Peroxidase Antibodies (TPO): >600 IU/mL [High positive]",
+        "impression": "Laboratory findings unequivocally confirm Primary Hypothyroidism secondary to Hashimoto's Thyroiditis. Immediate initiation of Levothyroxine replacement therapy indicated.",
+    },
+    {
+        "format": "txt",
+        "patient_id": "P-112",
+        "mrn": "112",
+        "name": "Arthur Pendelton",
+        "dob": "02/14/1958",
+        "gender": "M",
+        "enc_ref": "ENC-112-1 (Emergency)",
+        "date": "Feb 18, 2024",
+        "panel": "Brain Magnetic Resonance Imaging (MRI) (LOINC: 24725-4)",
+        "findings": "T2 and FLAIR hyperintensity in the left middle cerebral artery (MCA) territory with restricted diffusion on DWI consistent with acute non-hemorrhagic cerebral infarction. No evidence of mass effect, midline shift, or hemorrhagic transformation. MRA reveals high-grade stenosis of the left internal carotid artery bulb.",
+        "impression": "Acute ischemic stroke involving left MCA cortical and subcortical regions with severe left ICA stenotic disease.",
+    },
+    {
+        "format": "txt",
+        "patient_id": "P-113",
+        "mrn": "MRN 000113",
+        "name": "Grace Hopper Kelly",
+        "dob": "1975-10-31",
+        "gender": "F",
+        "enc_ref": "ENC-113-1 (Ambulatory)",
+        "date": "2023-12-05T13:45:00Z",
+        "panel": "Lipid Panel with Reflex LDL (LOINC: 24331-1)",
+        "findings": "Total Cholesterol: 295 mg/dL [High, Ref: <200]\nTriglycerides: 320 mg/dL [High, Ref: <150]\nHDL Cholesterol: 38 mg/dL [Low, Ref: >50]\nCalculated LDL Cholesterol: 193 mg/dL [Severe elevation, Ref: <100]",
+        "impression": "Severe Mixed Hyperlipidemia with prominent atherogenic dyslipidemia. Significant cardiovascular risk. Statin therapy and lifestyle modifications recommended.",
+    },
 ]
 
-# 2. CSV Notes Dataset (Scanned notes & progress reports)
-CSV_DATA_HEADER = (
-    "Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content\n"
-)
-CSV_DATA_ROWS = [
-    # Normal and edge case records
-    'MRN-000106,"David K. Miller","1972-04-19","male","ENC-106-1","AMB","2023-10-18 09:00:00","Progress Note","51-year-old male with hypertension and chronic kidney disease stage 3b. eGFR 38 mL/min/1.73m2, serum creatinine 2.1 mg/dL. Potassium stable at 4.6 mEq/L. Blood pressure 142/88. Renal ultrasound shows bilateral cortical thinning without hydronephrosis."\n',
-    'MRN:000107,"Maria Rodriguez-Santos","12/03/1980","F","ENC-107-1","AMB","2024-01-08","Consultation Note","43-year-old female presents with recurrent right upper quadrant colicky pain postprandially. Abdominal ultrasound confirms cholelithiasis with multiple gallstones and mild gallbladder wall thickening (3.5 mm). Referred for elective laparoscopic cholecystectomy."\n',
-    ' 108 ,"James O\'Connor","1960-09-05","M","ENC-108-1","AMB","2023-11-29T15:00:00Z","Oncology Follow-up","63-year-old male status-post left hemicolectomy for Stage IIA colon adenocarcinoma. Surveillance CT scan of chest/abdomen/pelvis reveals no evidence of local recurrence or distant metastatic disease. CEA level remains within normal limits at 1.8 ng/mL."\n',
-    'MRN-000109,"Priya Patel","1995-07-22","female","ENC-109-1","AMB","2024-02-01 11:30:00","Allergy & Immunology Note","28-year-old female with severe refractory atopic dermatitis and allergic rhinitis. Total serum IgE markedly elevated at 1,450 IU/mL. Initiated on Dupilumab 600mg loading dose followed by 300mg biweekly. Tolerating medication well with partial symptom relief."\n',
-    'MRN-000110,"William \'Bill\' Hayes","1951-11-14","cis-male","ENC-110-1","AMB","2023-08-25","Orthopedic Clinic Note","72-year-old male with severe tricompartmental osteoarthritis of right knee. Radiographs reveal bone-on-bone medial compartment joint space narrowing with subchondral sclerosis and osteophyte formation. Scheduled for right total knee arthroplasty."\n',
-    # Intentional duplicate / conflicting row for edge testing:
-    'MRN-000106,"David Miller","1972-04-19","M","ENC-106-1","AMB","2023-10-18","Duplicate Note","Duplicate entry with slightly varied name formatting and abbreviated gender."\n',
-]
 
-# 3. Plain Text Lab & Diagnostic Reports (Unstructured / Semi-Structured text)
-TXT_DATA = """======================================================================
-EHR PATHOLOGY & DIAGNOSTIC LAB ARCHIVE - UNSTRUCTURED MEDIA EXPORT
-Hospital Network Diagnostic Core Lab - System ID: OSTE-LAB-2024
-======================================================================
+def write_single_record(record: Dict[str, Any], output_dir: Path) -> Path:
+    """Writes a single patient record into its own standalone file."""
+    output_dir.mkdir(parents=True, exist_ok=True)
+    fmt = record.get("format", "json").lower()
+    p_id = record.get("patient_id", "P-UNKNOWN").lower().replace(":", "_").replace(" ", "_")
 
---- RECORD START ---
-PATIENT IDENTIFIER: MRN-000111
-PATIENT NAME: Fatima Zahra Haddad
-DOB: 1983-05-18
-GENDER: female
-ENCOUNTER REF: ENC-111-1 (Ambulatory)
-COLLECTION DATE: 2024-01-22 08:15:00
-TEST PANEL: Comprehensive Thyroid Panel (LOINC: 11579-0)
-FINDINGS:
-Free T4: 0.42 ng/dL [Low, Ref: 0.8 - 1.8 ng/dL]
-Total T3: 58 ng/dL [Low, Ref: 80 - 200 ng/dL]
-TSH: 28.5 uIU/mL [Severely Elevated, Ref: 0.45 - 4.5 uIU/mL]
-Thyroid Peroxidase Antibodies (TPO): >600 IU/mL [High positive]
-CLINICAL IMPRESSION:
-Laboratory findings unequivocally confirm Primary Hypothyroidism secondary to Hashimoto's Thyroiditis. Immediate initiation of Levothyroxine replacement therapy indicated.
---- RECORD END ---
+    if fmt == "json":
+        file_path = output_dir / f"{p_id}.json"
+        data_to_write = {k: v for k, v in record.items() if k != "format"}
+        with open(file_path, "w", encoding="utf-8") as f:
+            json.dump(data_to_write, f, indent=2)
+        return file_path
 
---- RECORD START ---
-PATIENT IDENTIFIER: 112
-PATIENT NAME: Arthur Pendelton
-DOB: 02/14/1958
-GENDER: M
-ENCOUNTER REF: ENC-112-1 (Emergency)
-COLLECTION DATE: Feb 18, 2024
-TEST PANEL: Brain Magnetic Resonance Imaging (MRI) (LOINC: 24725-4)
-FINDINGS:
-T2 and FLAIR hyperintensity in the left middle cerebral artery (MCA) territory with restricted diffusion on DWI consistent with acute non-hemorrhagic cerebral infarction. No evidence of mass effect, midline shift, or hemorrhagic transformation. MRA reveals high-grade stenosis of the left internal carotid artery bulb.
-CLINICAL IMPRESSION:
-Acute ischemic stroke involving left MCA cortical and subcortical regions with severe left ICA stenotic disease.
---- RECORD END ---
+    elif fmt == "csv":
+        file_path = output_dir / f"{p_id}.csv"
+        with open(file_path, "w", encoding="utf-8", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(["Pt_MRN", "patient_name", "dob", "gender", "encounter_id", "enc_class", "enc_date", "note_type", "note_content"])
+            writer.writerow([
+                record["mrn"],
+                record["name"],
+                record["dob"],
+                record["gender"],
+                record["enc_id"],
+                record["enc_class"],
+                record["enc_date"],
+                record["note_type"],
+                record["note_content"],
+            ])
+        return file_path
 
---- RECORD START ---
-PATIENT IDENTIFIER: MRN 000113
-PATIENT NAME: Grace Hopper Kelly
-DOB: 1975-10-31
-GENDER: F
-ENCOUNTER REF: ENC-113-1 (Ambulatory)
-COLLECTION DATE: 2023-12-05T13:45:00Z
-TEST PANEL: Lipid Panel with Reflex LDL (LOINC: 24331-1)
-FINDINGS:
-Total Cholesterol: 295 mg/dL [High, Ref: <200]
-Triglycerides: 320 mg/dL [High, Ref: <150]
-HDL Cholesterol: 38 mg/dL [Low, Ref: >50]
-Calculated LDL Cholesterol: 193 mg/dL [Severe elevation, Ref: <100]
-CLINICAL IMPRESSION:
-Severe Mixed Hyperlipidemia with prominent atherogenic dyslipidemia. Significant cardiovascular risk. Statin therapy and lifestyle modifications recommended.
---- RECORD END ---
-"""
+    elif fmt == "txt":
+        file_path = output_dir / f"{p_id}.txt"
+        with open(file_path, "w", encoding="utf-8") as f:
+            f.write("--- RECORD START ---\n")
+            f.write(f"PATIENT IDENTIFIER: {record['mrn']}\n")
+            f.write(f"PATIENT NAME: {record['name']}\n")
+            f.write(f"DOB: {record['dob']}\n")
+            f.write(f"GENDER: {record['gender']}\n")
+            f.write(f"ENCOUNTER REF: {record['enc_ref']}\n")
+            f.write(f"COLLECTION DATE: {record['date']}\n")
+            f.write(f"TEST PANEL: {record['panel']}\n")
+            f.write(f"FINDINGS:\n{record['findings']}\n")
+            f.write(f"CLINICAL IMPRESSION:\n{record['impression']}\n")
+            f.write("--- RECORD END ---\n")
+        return file_path
+    else:
+        raise ValueError(f"Unknown format: {fmt}")
 
 
-def generate_all():
-    # 1. JSON
-    json_path = DATA_DIR / "simulated_ehr_export.json"
-    with open(json_path, "w", encoding="utf-8") as f:
-        json.dump(JSON_DATA, f, indent=2)
-    print(f"Generated {json_path} ({len(JSON_DATA)} patients)")
-
-    # 2. CSV
-    csv_path = DATA_DIR / "scanned_notes.csv"
-    with open(csv_path, "w", encoding="utf-8") as f:
-        f.write(CSV_DATA_HEADER)
-        f.writelines(CSV_DATA_ROWS)
-    print(f"Generated {csv_path} ({len(CSV_DATA_ROWS)} rows)")
-
-    # 3. TXT
-    txt_path = DATA_DIR / "lab_results.txt"
-    with open(txt_path, "w", encoding="utf-8") as f:
-        f.write(TXT_DATA)
-    print(f"Generated {txt_path}")
+def generate_all(output_dir: Path = DATA_DIR):
+    created = []
+    for rec in BASE_RECORDS:
+        fp = write_single_record(rec, output_dir)
+        created.append(fp)
+    print(f"Generated {len(created)} individual patient record files in {output_dir}/")
+    return created
 
 
 if __name__ == "__main__":
     generate_all()
-

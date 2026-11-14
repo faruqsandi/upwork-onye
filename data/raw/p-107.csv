@@ -1,0 +1,2 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN:000107,Maria Rodriguez-Santos,12/03/1980,F,ENC-107-1,AMB,2024-01-08,Consultation Note,43-year-old female presents with recurrent right upper quadrant colicky pain postprandially. Abdominal ultrasound confirms cholelithiasis with multiple gallstones and mild gallbladder wall thickening (3.5 mm). Referred for elective laparoscopic cholecystectomy.

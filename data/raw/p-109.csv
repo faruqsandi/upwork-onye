@@ -1,0 +1,2 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN-000109,Priya Patel,1995-07-22,female,ENC-109-1,AMB,2024-02-01 11:30:00,Allergy & Immunology Note,"28-year-old female with severe refractory atopic dermatitis and allergic rhinitis. Total serum IgE markedly elevated at 1,450 IU/mL. Initiated on Dupilumab 600mg loading dose followed by 300mg biweekly. Tolerating medication well with partial symptom relief."

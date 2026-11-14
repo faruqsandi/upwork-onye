@@ -238,8 +238,11 @@ class TextEHRParser(BaseEHRParser):
         with open(path, "r", encoding="utf-8") as f:
             content = f.read()
 
-        # Split on record delimiters
-        record_blocks = re.findall(r"--- RECORD START ---(.*?)--- RECORD END ---", content, re.DOTALL)
+        # Split on record delimiters if present, or treat entire file as single record
+        if "--- RECORD START ---" in content:
+            record_blocks = re.findall(r"--- RECORD START ---(.*?)--- RECORD END ---", content, re.DOTALL)
+        else:
+            record_blocks = [content] if content.strip() else []
         results: List[CanonicalPatient] = []
 
         for idx, block in enumerate(record_blocks):
@@ -336,6 +339,30 @@ class IngestionPipeline:
         self.json_parser = JSONEHRParser()
         self.csv_parser = CSVEHRParser()
         self.txt_parser = TextEHRParser()
+
+    def ingest_directory(self, dir_path: Union[str, Path]) -> List[CanonicalPatient]:
+        """Scan directory and ingest all individual or batch JSON, CSV, and TXT files."""
+        path = Path(dir_path)
+        if not path.is_dir():
+            return []
+
+        all_patients: List[CanonicalPatient] = []
+        for file_path in sorted(path.iterdir()):
+            if not file_path.is_file():
+                continue
+            ext = file_path.suffix.lower()
+            try:
+                if ext == ".json":
+                    all_patients.extend(self.json_parser.parse(file_path))
+                elif ext == ".csv":
+                    all_patients.extend(self.csv_parser.parse(file_path))
+                elif ext in [".txt", ".text"]:
+                    all_patients.extend(self.txt_parser.parse(file_path))
+            except Exception as e:
+                # Log and continue with remaining files
+                print(f"Skipping corrupted file {file_path.name}: {e}")
+
+        return DataCleaner.deduplicate_and_merge(all_patients)
 
     def ingest_sources(
         self,

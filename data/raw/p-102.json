@@ -1,0 +1,32 @@
+{
+  "patient_id": "P-102",
+  "MRN": " 102 ",
+  "full_name": "Marcus Aurelius Thorne",
+  "birth_date": "10/24/1978",
+  "gender_code": "M",
+  "encounter": {
+    "encounter_id": "ENC-102-1",
+    "class": "EMER",
+    "period_start": "2024-01-15 03:45:00",
+    "period_end": "2024-01-15 08:30:00",
+    "reason": "Substernal chest pain radiating to left jaw and diaphoresis"
+  },
+  "documents": [
+    {
+      "doc_id": "DOC-102-A",
+      "title": "Emergency Department Admission Note",
+      "type_code": "11488-4",
+      "date": "2024-01-15T04:15:00Z",
+      "content": "45-year-old male arrived via EMS with acute severe crushing substernal chest pressure, diaphoresis, and shortness of breath starting 2 hours prior. ECG demonstrates ST-segment elevations in leads V1-V4 consistent with acute anterior STEMI. Emergent cardiac catheterization initiated."
+    }
+  ],
+  "diagnostics": [
+    {
+      "report_id": "DIAG-102-A",
+      "test_name": "Cardiac Troponin I",
+      "loinc_code": "10839-9",
+      "effective_date": "2024-01-15T04:00:00Z",
+      "conclusion": "Troponin I critically elevated at 14.80 ng/mL (Ref: <0.04 ng/mL). Consistent with Acute Myocardial Infarction."
+    }
+  ]
+}

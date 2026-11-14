@@ -1,0 +1,2 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+ 108 ,James O'Connor,1960-09-05,M,ENC-108-1,AMB,2023-11-29T15:00:00Z,Oncology Follow-up,63-year-old male status-post left hemicolectomy for Stage IIA colon adenocarcinoma. Surveillance CT scan of chest/abdomen/pelvis reveals no evidence of local recurrence or distant metastatic disease. CEA level remains within normal limits at 1.8 ng/mL.

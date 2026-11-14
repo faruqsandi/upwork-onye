@@ -1,0 +1,16 @@
+--- RECORD START ---
+PATIENT IDENTIFIER: MRN 000113
+PATIENT NAME: Grace Hopper Kelly
+DOB: 1975-10-31
+GENDER: F
+ENCOUNTER REF: ENC-113-1 (Ambulatory)
+COLLECTION DATE: 2023-12-05T13:45:00Z
+TEST PANEL: Lipid Panel with Reflex LDL (LOINC: 24331-1)
+FINDINGS:
+Total Cholesterol: 295 mg/dL [High, Ref: <200]
+Triglycerides: 320 mg/dL [High, Ref: <150]
+HDL Cholesterol: 38 mg/dL [Low, Ref: >50]
+Calculated LDL Cholesterol: 193 mg/dL [Severe elevation, Ref: <100]
+CLINICAL IMPRESSION:
+Severe Mixed Hyperlipidemia with prominent atherogenic dyslipidemia. Significant cardiovascular risk. Statin therapy and lifestyle modifications recommended.
+--- RECORD END ---

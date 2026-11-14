@@ -1,0 +1,2 @@
+Pt_MRN,patient_name,dob,gender,encounter_id,enc_class,enc_date,note_type,note_content
+MRN-000106,David K. Miller,1972-04-19,male,ENC-106-1,AMB,2023-10-18 09:00:00,Progress Note,"51-year-old male with hypertension and chronic kidney disease stage 3b. eGFR 38 mL/min/1.73m2, serum creatinine 2.1 mg/dL. Potassium stable at 4.6 mEq/L. Blood pressure 142/88. Renal ultrasound shows bilateral cortical thinning without hydronephrosis."

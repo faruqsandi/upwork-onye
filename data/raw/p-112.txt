@@ -1,0 +1,13 @@
+--- RECORD START ---
+PATIENT IDENTIFIER: 112
+PATIENT NAME: Arthur Pendelton
+DOB: 02/14/1958
+GENDER: M
+ENCOUNTER REF: ENC-112-1 (Emergency)
+COLLECTION DATE: Feb 18, 2024
+TEST PANEL: Brain Magnetic Resonance Imaging (MRI) (LOINC: 24725-4)
+FINDINGS:
+T2 and FLAIR hyperintensity in the left middle cerebral artery (MCA) territory with restricted diffusion on DWI consistent with acute non-hemorrhagic cerebral infarction. No evidence of mass effect, midline shift, or hemorrhagic transformation. MRA reveals high-grade stenosis of the left internal carotid artery bulb.
+CLINICAL IMPRESSION:
+Acute ischemic stroke involving left MCA cortical and subcortical regions with severe left ICA stenotic disease.
+--- RECORD END ---

@@ -293,63 +293,73 @@ class LLMSyntheticGenerator:
 
         return records
 
-    def export_all_formats(self, records: List[Dict[str, Any]], output_dir: Path) -> None:
-        """Export generated cohort across JSON, CSV, and plain-text formats."""
+    def export_individual_records(self, records: List[Dict[str, Any]], output_dir: Path) -> List[Path]:
+        """Export each generated record into its own standalone file, rotating across JSON, CSV, and TXT."""
         output_dir.mkdir(parents=True, exist_ok=True)
+        created_files = []
 
-        # 1. JSON Export
-        json_path = output_dir / "simulated_ehr_export.json"
-        with open(json_path, "w", encoding="utf-8") as f:
-            json.dump(records, f, indent=2)
-        print(f"Exported JSON: {json_path} ({len(records)} patients)")
+        for idx, r in enumerate(records):
+            p_id = r["patient_id"].lower().replace(":", "_").replace(" ", "_")
+            fmt = ["json", "csv", "txt"][idx % 3]
 
-        # 2. CSV Export
-        csv_path = output_dir / "scanned_notes.csv"
-        with open(csv_path, "w", encoding="utf-8", newline="") as f:
-            writer = csv.writer(f)
-            writer.writerow(["Pt_MRN", "patient_name", "dob", "gender", "encounter_id", "enc_class", "enc_date", "note_type", "note_content"])
-            for r in records:
+            if fmt == "json":
+                file_path = output_dir / f"{p_id}.json"
+                with open(file_path, "w", encoding="utf-8") as f:
+                    json.dump(r, f, indent=2)
+                created_files.append(file_path)
+
+            elif fmt == "csv":
+                file_path = output_dir / f"{p_id}.csv"
                 enc = r["encounter"]
                 doc = r["documents"][0]
-                writer.writerow([
-                    r["MRN"],
-                    r["full_name"],
-                    r["birth_date"],
-                    r["gender_code"],
-                    enc["encounter_id"],
-                    enc["class"],
-                    enc["period_start"],
-                    doc["title"],
-                    doc["content"],
-                ])
-        print(f"Exported CSV:  {csv_path} ({len(records)} rows)")
+                with open(file_path, "w", encoding="utf-8", newline="") as f:
+                    writer = csv.writer(f)
+                    writer.writerow(["Pt_MRN", "patient_name", "dob", "gender", "encounter_id", "enc_class", "enc_date", "note_type", "note_content"])
+                    writer.writerow([
+                        r["MRN"],
+                        r["full_name"],
+                        r["birth_date"],
+                        r["gender_code"],
+                        enc["encounter_id"],
+                        enc["class"],
+                        enc["period_start"],
+                        doc["title"],
+                        doc["content"],
+                    ])
+                created_files.append(file_path)
 
-        # 3. Plain Text Export
-        txt_path = output_dir / "lab_results.txt"
-        with open(txt_path, "w", encoding="utf-8") as f:
-            f.write("======================================================================\n")
-            f.write("EHR PATHOLOGY & DIAGNOSTIC LAB ARCHIVE - LLM GENERATED BATCH EXPORT\n")
-            f.write("======================================================================\n\n")
-            for r in records:
+            elif fmt == "txt":
+                file_path = output_dir / f"{p_id}.txt"
                 enc = r["encounter"]
                 diag = r["diagnostics"][0]
-                f.write("--- RECORD START ---\n")
-                f.write(f"PATIENT IDENTIFIER: {r['MRN'].strip()}\n")
-                f.write(f"PATIENT NAME: {r['full_name']}\n")
-                f.write(f"DOB: {r['birth_date']}\n")
-                f.write(f"GENDER: {r['gender_code']}\n")
-                f.write(f"ENCOUNTER REF: {enc['encounter_id']} ({enc['class']})\n")
-                f.write(f"COLLECTION DATE: {diag['effective_date']}\n")
-                f.write(f"TEST PANEL: {diag['test_name']} (LOINC: {diag['loinc_code']})\n")
-                f.write(f"FINDINGS:\n{diag['conclusion']}\n")
-                f.write(f"CLINICAL IMPRESSION:\nConfirmed diagnosis of {enc['reason']}.\n")
-                f.write("--- RECORD END ---\n\n")
-        print(f"Exported TXT:  {txt_path} ({len(records)} reports)")
+                with open(file_path, "w", encoding="utf-8") as f:
+                    f.write("--- RECORD START ---\n")
+                    f.write(f"PATIENT IDENTIFIER: {r['MRN'].strip()}\n")
+                    f.write(f"PATIENT NAME: {r['full_name']}\n")
+                    f.write(f"DOB: {r['birth_date']}\n")
+                    f.write(f"GENDER: {r['gender_code']}\n")
+                    f.write(f"ENCOUNTER REF: {enc['encounter_id']} ({enc['class']})\n")
+                    f.write(f"COLLECTION DATE: {diag['effective_date']}\n")
+                    f.write(f"TEST PANEL: {diag['test_name']} (LOINC: {diag['loinc_code']})\n")
+                    f.write(f"FINDINGS:\n{diag['conclusion']}\n")
+                    f.write(f"CLINICAL IMPRESSION:\nConfirmed diagnosis of {enc['reason']}.\n")
+                    f.write("--- RECORD END ---\n")
+                created_files.append(file_path)
+
+        json_count = sum(1 for p in created_files if p.suffix == ".json")
+        csv_count = sum(1 for p in created_files if p.suffix == ".csv")
+        txt_count = sum(1 for p in created_files if p.suffix == ".txt")
+        print(f"Exported {len(created_files)} individual records to {output_dir}/ ({json_count} JSON, {csv_count} CSV, {txt_count} TXT)")
+        return created_files
+
+    def export_all_formats(self, records: List[Dict[str, Any]], output_dir: Path) -> List[Path]:
+        """Backwards-compatible export that creates individual record files."""
+        return self.export_individual_records(records, output_dir)
 
 
 def main():
     parser = argparse.ArgumentParser(description="Generate synthetic EHR cohorts using local OpenAPI-compatible LLM.")
-    parser.add_argument("--count", type=int, default=12, help="Number of patient records to generate (default: 12)")
+    parser.add_argument("--count", type=int, default=100, help="Number of individual patient record files to generate (default: 100)")
     parser.add_argument("--base-url", type=str, default=DEFAULT_BASE_URL, help=f"LM Studio API base URL (default: {DEFAULT_BASE_URL})")
     parser.add_argument("--model", type=str, default=DEFAULT_MODEL, help=f"LLM model name (default: {DEFAULT_MODEL})")
     parser.add_argument("--output-dir", type=str, default="data/raw", help="Target directory for generated EHR files (default: data/raw)")
@@ -358,12 +368,12 @@ def main():
     generator = LLMSyntheticGenerator(base_url=args.base_url, model=args.model)
     generator.verify_connection()
 
-    print(f"\nGenerating {args.count} synthetic EHR patient records using {generator.model}...")
+    print(f"\nGenerating {args.count} individual synthetic EHR patient records using {generator.model}...")
     records = generator.generate_cohort(count=args.count)
 
     out_dir = Path(args.output_dir)
-    generator.export_all_formats(records, output_dir=out_dir)
-    print(f"\nSuccessfully generated {len(records)} records in {out_dir}/ ready for ingestion!\n")
+    generator.export_individual_records(records, output_dir=out_dir)
+    print(f"\nSuccessfully generated {len(records)} individual records in {out_dir}/ ready for ingestion!\n")
 
 
 if __name__ == "__main__":

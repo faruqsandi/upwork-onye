@@ -1,0 +1,32 @@
+{
+  "patient_id": "P-103",
+  "MRN": "MRN:000103",
+  "full_name": "SARAH CHEN",
+  "birth_date": "1992-03-15",
+  "gender_code": "Female",
+  "encounter": {
+    "encounter_id": "ENC-103-1",
+    "class": "AMB",
+    "period_start": "2023-09-12T14:00:00Z",
+    "period_end": "2023-09-12T14:45:00Z",
+    "reason": "Persistent productive cough, fever, and right pleuritic chest pain"
+  },
+  "documents": [
+    {
+      "doc_id": "DOC-103-A",
+      "title": "Pulmonology Consultation Note",
+      "type_code": "11488-4",
+      "date": "2023-09-12T14:30:00Z",
+      "content": "31 yo female with 1-week history of worsening dyspnea, chills, and purulent sputum. Oxygen saturation 92% on ambient air. Right lower lung base reveals crackles and bronchial breath sounds. Started on empiric Levofloxacin for community-acquired pneumonia."
+    }
+  ],
+  "diagnostics": [
+    {
+      "report_id": "DIAG-103-A",
+      "test_name": "Chest Radiography 2 Views (CXR)",
+      "loinc_code": "24648-8",
+      "effective_date": "Sep 12, 2023",
+      "conclusion": "Frontal and lateral chest radiographs demonstrate dense consolidation in the right lower lobe with prominent air bronchograms, typical for bacterial lobar pneumonia. No pleural effusion."
+    }
+  ]
+}
