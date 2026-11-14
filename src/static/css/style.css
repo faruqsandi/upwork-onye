@@ -1,0 +1,22 @@
+/* Custom clinical theme additions */
+.chip {
+  @apply px-2.5 py-1 rounded-full bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 border border-slate-200 hover:border-indigo-300 font-medium cursor-pointer transition-all active:scale-95;
+}
+
+/* Card hover animation */
+.result-card {
+  transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.result-card:hover {
+  transform: translateY(-1px);
+}
+
+/* Custom scrollbar for raw json */
+pre::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+pre::-webkit-scrollbar-thumb {
+  background-color: #475569;
+  border-radius: 3px;
+}
