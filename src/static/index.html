@@ -50,17 +50,17 @@
               HL7 FHIR R4
             </span>
           </div>
-          <p class="text-xs text-slate-500">Clinical Data Ingestion · HL7 FHIR Normalization · Clinical Summarization · Semantic Search</p>
+          <p class="text-xs text-slate-500">Patient records search and smart summaries</p>
         </div>
       </div>
 
       <div class="flex items-center space-x-3">
-        <!-- Anonymization Toggle -->
+        <!-- Privacy / Hide Names Toggle -->
         <div
           id="anonymize-container"
           class="flex items-center space-x-2 bg-slate-50 hover:bg-slate-100 border border-slate-300 px-3 py-1.5 rounded-md transition-colors cursor-pointer select-none"
           onclick="toggleAnonymization()"
-          title="Toggle HIPAA Safe Harbor de-identification for UI presentation"
+          title="Hide patient names and personal details"
         >
           <span class="relative inline-flex items-center">
             <input type="checkbox" id="toggle-anonymize" class="sr-only peer" onchange="handleAnonymizationChange(event)">
@@ -70,7 +70,7 @@
             <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
             </svg>
-            <span id="anonymize-label">Anonymize PHI</span>
+            <span id="anonymize-label">Hide Names & Details</span>
           </span>
         </div>
 
@@ -83,6 +83,19 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
           </svg>
           Re-ingest data from directory
+        </button>
+
+        <!-- Clear Data Button -->
+        <button
+          id="btn-clear-data"
+          onclick="clearAllData()"
+          class="inline-flex items-center px-2.5 py-1.5 border border-rose-200 shadow-sm text-xs font-medium rounded-md text-rose-700 bg-white hover:bg-rose-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 transition-colors"
+          title="Clear all indexed patient data, FHIR bundles, and vector store"
+        >
+          <svg class="-ml-0.5 mr-1 h-3.5 w-3.5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+          </svg>
+          Clear Data
         </button>
         <span class="h-4 w-px bg-slate-200" aria-hidden="true"></span>
         <a href="/docs" target="_blank" class="text-xs text-indigo-600 hover:text-indigo-800 font-medium">FastAPI Docs &rarr;</a>
@@ -130,67 +143,11 @@
       </div>
     </section>
 
-    <!-- Ingestion Stats & Progress Panel -->
-    <section id="ingestion-stats-panel" class="hidden bg-white rounded-xl shadow-sm border border-slate-200 p-5 transition-all space-y-3">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center space-x-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-          <h3 class="text-sm font-bold text-slate-900">Ingestion Pipeline Telemetry</h3>
-        </div>
-        <button onclick="dismissStatsPanel()" class="text-xs text-slate-400 hover:text-slate-600 transition-colors">
-          ✕ Dismiss
-        </button>
-      </div>
-
-      <!-- Live progress bar (visible while ingesting) -->
-      <div id="ingestion-progress-bar" class="hidden space-y-1.5">
-        <div class="flex justify-between text-xs text-slate-600 font-medium">
-          <span id="progress-text">Processing clinical records...</span>
-          <span id="progress-pct">Normalizing to FHIR R4</span>
-        </div>
-        <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-          <div class="bg-indigo-600 h-2 rounded-full animate-pulse w-full"></div>
-        </div>
-      </div>
-
-      <!-- Stats Grid -->
-      <div id="stats-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
-        <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">
-          <span class="text-[11px] font-medium text-slate-500 uppercase tracking-wide">Total Ingested</span>
-          <p id="stat-total" class="text-lg font-bold text-slate-900 mt-0.5">0</p>
-        </div>
-        <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
-          <span class="text-[11px] font-medium text-emerald-700 uppercase tracking-wide">Successful</span>
-          <p id="stat-successful" class="text-lg font-bold text-emerald-700 mt-0.5">0</p>
-        </div>
-        <div class="p-3 bg-rose-50 border border-rose-200 rounded-lg">
-          <span class="text-[11px] font-medium text-rose-700 uppercase tracking-wide">Failed</span>
-          <p id="stat-failed" class="text-lg font-bold text-rose-700 mt-0.5">0</p>
-        </div>
-        <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg">
-          <span class="text-[11px] font-medium text-amber-800 uppercase tracking-wide">Skipped (Duplicate)</span>
-          <p id="stat-duplicates" class="text-lg font-bold text-amber-800 mt-0.5">0</p>
-        </div>
-      </div>
-
-      <div id="stats-meta" class="flex flex-wrap items-center justify-between text-xs text-slate-500 pt-1 border-t border-slate-100">
-        <span id="stats-message">Telemetry updated.</span>
-        <span id="stats-indices" class="font-mono text-[11px]"></span>
-      </div>
-
-      <!-- Failures detail accordion (if failed > 0) -->
-      <div id="failures-box" class="hidden bg-rose-50 border border-rose-200 rounded-lg p-3 text-xs text-rose-800 space-y-1">
-        <span class="font-bold">Errors Encountered During Parsing:</span>
-        <div id="failures-list" class="space-y-0.5 max-h-32 overflow-y-auto"></div>
-      </div>
-    </section>
-
     <!-- Search Box Card -->
-    <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 transition-all" aria-label="Clinical Semantic Search">
+    <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 transition-all" aria-label="Search">
       <div class="space-y-4">
-        <label for="search-input" class="block text-sm font-semibold text-slate-900">
-          Clinical Semantic Search
-          <span class="text-xs font-normal text-slate-500 ml-2">(searches clinical documentation, pathology reports, diagnostic studies &amp; clinical summaries)</span>
+        <label for="search-input" class="block text-base font-semibold text-slate-900">
+          Search
         </label>
         
         <div class="relative rounded-lg shadow-sm">
@@ -203,8 +160,8 @@
             type="search"
             id="search-input"
             class="block w-full pl-11 pr-24 py-3.5 sm:text-base border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-slate-900 placeholder-slate-400 bg-slate-50/50"
-            placeholder="e.g. 'Patients with elevated HbA1c or foot numbness', 'crushing chest pain STEMI', 'lobar pneumonia consolidation'..."
-            aria-label="Clinical search query"
+            placeholder="Search symptoms, illnesses, treatments, or tests..."
+            aria-label="Search query"
             autocomplete="off"
           />
           <div class="absolute inset-y-0 right-0 pr-3 flex items-center space-x-2">
@@ -221,27 +178,56 @@
 
         <!-- Suggestion Chips -->
         <div class="flex flex-wrap items-center gap-2 pt-1 text-xs">
-          <span class="text-slate-500 font-medium">Clinical Examples:</span>
-          <button onclick="setQuery('uncontrolled diabetes with elevated HbA1c and peripheral neuropathy')" class="chip">Diabetic Neuropathy & HbA1c</button>
-          <button onclick="setQuery('acute crushing chest pain with anterior STEMI and elevated troponin')" class="chip">Acute STEMI & Troponin</button>
-          <button onclick="setQuery('bacterial lobar pneumonia with right lower lobe consolidation')" class="chip">Pneumonia Consolidation</button>
-          <button onclick="setQuery('acute decompensated heart failure with elevated BNP')" class="chip">Decompensated CHF & BNP</button>
-          <button onclick="setQuery('severe proteinuria and lupus nephritis flare')" class="chip">Lupus Nephritis</button>
+          <span class="text-slate-500 font-medium">Examples:</span>
+          <button onclick="setQuery('uncontrolled diabetes with elevated HbA1c and peripheral neuropathy')" class="chip">Diabetes &amp; Numbness</button>
+          <button onclick="setQuery('acute crushing chest pain with anterior STEMI and elevated troponin')" class="chip">Chest Pain &amp; Heart Attack</button>
+          <button onclick="setQuery('bacterial lobar pneumonia with right lower lobe consolidation')" class="chip">Pneumonia</button>
+          <button onclick="setQuery('acute decompensated heart failure with elevated BNP')" class="chip">Heart Failure</button>
+          <button onclick="setQuery('severe proteinuria and lupus nephritis flare')" class="chip">Kidney Issues</button>
+        </div>
+
+        <!-- Bare Inline Ingestion Telemetry (No card, inline text below Clinical Semantic Search) -->
+        <div id="ingestion-stats-panel" class="pt-2 flex flex-col space-y-1 text-xs">
+          <div class="flex flex-wrap items-center justify-between gap-2 text-slate-500">
+            <div class="flex items-center space-x-2">
+              <span id="queue-status-dot" class="w-2 h-2 rounded-full bg-emerald-500 inline-block flex-shrink-0"></span>
+              <span id="stats-message" class="text-slate-600 font-medium">Ready · All records loaded.</span>
+              <span id="progress-text" class="hidden"></span>
+              <span id="progress-pct" class="hidden font-semibold text-indigo-600"></span>
+            </div>
+            <div class="flex items-center space-x-3 text-[11px] font-mono text-slate-500">
+              <span id="stat-unprocessed-wrap"><span id="stat-unprocessed" class="font-bold text-slate-700">0</span> waiting</span>
+              <span id="stat-in-processing-wrap"><span id="stat-in-processing" class="font-bold text-blue-600">0</span> loading</span>
+              <span id="stat-successful-wrap"><span id="stat-successful" class="font-bold text-emerald-600">50</span> loaded</span>
+              <span id="stat-duplicates-wrap"><span id="stat-duplicates" class="font-bold text-amber-600">0</span> duplicates</span>
+              <span id="stat-failed-wrap" class="text-rose-600"><span id="stat-failed" class="font-bold">0</span> errors</span>
+              <span id="stat-total-wrap" class="text-slate-400">Total: <span id="stat-total">50</span></span>
+              <span id="stats-indices" class="hidden"></span>
+            </div>
+          </div>
+          <!-- Micro-progress line (only visible when is_active is true) -->
+          <div id="ingestion-progress-bar" class="hidden w-full bg-slate-100 rounded-full h-1 overflow-hidden">
+            <div id="progress-bar-fill" class="bg-indigo-600 h-1 rounded-full transition-all duration-300 w-0"></div>
+          </div>
+          <!-- Failures detail inline (if failed > 0) -->
+          <div id="failures-box" class="hidden text-[11px] text-rose-600 font-mono">
+            <span class="font-bold">Errors:</span> <span id="failures-list"></span>
+          </div>
         </div>
 
         <!-- Filters Grid -->
         <div class="pt-4 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-3 gap-4">
           <!-- Resource Type Filter -->
           <div>
-            <label for="filter-resource-type" class="block text-xs font-medium text-slate-600 mb-1">FHIR Resource Type</label>
+            <label for="filter-resource-type" class="block text-xs font-medium text-slate-600 mb-1">Record Type</label>
             <select
               id="filter-resource-type"
               onchange="executeSearch()"
               class="block w-full text-xs py-2 px-3 border border-slate-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             >
-              <option value="">All Resource Types</option>
-              <option value="DocumentReference">DocumentReference (Clinical Notes)</option>
-              <option value="DiagnosticReport">DiagnosticReport (Labs & Imaging)</option>
+              <option value="">All Types</option>
+              <option value="DocumentReference">Doctor &amp; Visit Notes</option>
+              <option value="DiagnosticReport">Lab &amp; Test Reports</option>
             </select>
           </div>
 
@@ -282,7 +268,20 @@
     <!-- Query Status Bar -->
     <div id="query-meta-bar" class="flex items-center justify-between text-xs text-slate-500 px-1" aria-live="polite">
       <div id="match-summary">Ready for query. Press Enter or click Search.</div>
-      <div id="latency-badge" class="font-mono text-emerald-600 font-semibold hidden"></div>
+      <div class="flex items-center space-x-3">
+        <button
+          id="btn-copy-url"
+          onclick="copyBookmarkUrl()"
+          class="inline-flex items-center space-x-1.5 px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-indigo-600 font-medium transition-colors border border-slate-200"
+          title="Copy bookmarkable URL with query &amp; filters"
+        >
+          <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+          </svg>
+          <span id="copy-url-label">Copy URL / Bookmark</span>
+        </button>
+        <div id="latency-badge" class="font-mono text-emerald-600 font-semibold hidden"></div>
+      </div>
     </div>
 
     <!-- Results Feed / Skeletons / Empty States -->
@@ -292,9 +291,9 @@
         <svg class="mx-auto h-12 w-12 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
-        <h3 class="mt-3 text-sm font-semibold text-slate-900">Clinical Chart Search</h3>
+        <h3 class="mt-3 text-sm font-semibold text-slate-900">Patient Search</h3>
         <p class="mt-1 text-xs text-slate-500 max-w-sm mx-auto">
-          Query patient records by entering clinical symptoms, diagnoses, or lab panels above.
+          Type symptoms, conditions, or test names in the search box above to find matching patient records.
         </p>
       </div>
 
@@ -340,11 +339,24 @@
             </div>
             <p id="drawer-demographics" class="text-xs text-slate-400 mt-1">DOB: YYYY-MM-DD · Gender: unknown · ID: P-000</p>
           </div>
-          <button onclick="closeDrawer()" class="rounded-lg p-2 text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" aria-label="Close detail panel">
-            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-          </button>
+          <div class="flex items-center space-x-2">
+            <button
+              id="btn-drawer-copy-url"
+              onclick="copyBookmarkUrl()"
+              class="rounded-lg p-2 text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+              aria-label="Copy link to this patient record"
+              title="Copy bookmarkable link to this patient file"
+            >
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+              </svg>
+            </button>
+            <button onclick="closeDrawer()" class="rounded-lg p-2 text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" aria-label="Close detail panel">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
         </div>
 
         <!-- Drawer Body -->
@@ -355,7 +367,7 @@
             <div class="flex items-center justify-between">
               <div class="flex items-center space-x-2">
                 <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
-                <h3 class="text-sm font-bold text-indigo-950 uppercase tracking-wide">Structured Clinical Summary</h3>
+                <h3 class="text-sm font-bold text-indigo-950 uppercase tracking-wide">Patient Summary</h3>
               </div>
               <span id="drawer-confidence-badge" class="px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-100 text-indigo-800">
                 Confidence: 95%
@@ -364,13 +376,13 @@
 
             <!-- Chief Concern -->
             <div>
-              <span class="text-xs font-semibold text-indigo-900 uppercase">Chief Concern:</span>
+              <span class="text-xs font-semibold text-indigo-900 uppercase">Reason for Visit:</span>
               <p id="drawer-chief-concern" class="text-sm text-slate-800 font-medium mt-0.5"></p>
             </div>
 
             <!-- Diagnoses Pills -->
             <div>
-              <span class="text-xs font-semibold text-indigo-900 uppercase">Active Diagnoses:</span>
+              <span class="text-xs font-semibold text-indigo-900 uppercase">Conditions:</span>
               <div id="drawer-diagnoses-list" class="flex flex-wrap gap-1.5 mt-1.5"></div>
             </div>
 
@@ -380,14 +392,14 @@
                 <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                 </svg>
-                <span>Flagged Clinical Anomalies:</span>
+                <span>Important Alerts &amp; Findings:</span>
               </span>
               <div id="drawer-anomalies-list"></div>
             </div>
 
             <!-- Full Narrative Synthesis -->
             <div>
-              <span class="text-xs font-semibold text-indigo-900 uppercase">Clinical Narrative Synthesis:</span>
+              <span class="text-xs font-semibold text-indigo-900 uppercase">Detailed Summary:</span>
               <p id="drawer-full-narrative" class="text-xs text-slate-700 leading-relaxed mt-1 bg-white p-3 rounded border border-indigo-100"></p>
             </div>
 
@@ -403,9 +415,9 @@
           <!-- Linked FHIR Resources Section -->
           <div class="space-y-3">
             <div class="flex items-center justify-between">
-              <h3 class="text-sm font-bold text-slate-900">Linked EHR Media & Lab Records</h3>
-              <button onclick="toggleRawFHIR()" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition-colors">
-                View Raw FHIR R4 Bundle JSON &rarr;
+              <h3 class="text-sm font-bold text-slate-900">Documents &amp; Test Reports</h3>
+              <button id="btn-toggle-fhir" onclick="toggleRawFHIR()" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition-colors">
+                View Technical Details (FHIR JSON) &rarr;
               </button>
             </div>
             <div id="drawer-records-list" class="space-y-2"></div>
@@ -424,8 +436,8 @@
 
           <!-- Per-Record Ingestion Audit Log -->
           <div class="space-y-3">
-            <h3 class="text-sm font-bold text-slate-900">Data Ingestion Audit Trail</h3>
-            <p class="text-xs text-slate-500">Field modifications, sanitizations, and schema normalizations recorded during Task 1 cleaning.</p>
+            <h3 class="text-sm font-bold text-slate-900">Data Adjustments Log</h3>
+            <p class="text-xs text-slate-500">Automatic formatting and clean-up applied to standardise this record.</p>
             <div class="overflow-x-auto border border-slate-200 rounded-lg">
               <table class="min-w-full divide-y divide-slate-200 text-left text-xs">
                 <thead class="bg-slate-50 text-slate-700 font-semibold">

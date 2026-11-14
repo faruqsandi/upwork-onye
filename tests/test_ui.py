@@ -22,6 +22,8 @@ class TestFrontendDashboard:
         assert "stat-successful" in resp.text
         assert "stat-failed" in resp.text
         assert "stat-duplicates" in resp.text
+        assert "btn-clear-data" in resp.text
+        assert "Clear Data" in resp.text
         assert "SLA &lt;2000ms" not in resp.text
         assert "SLA <2000ms" not in resp.text
 

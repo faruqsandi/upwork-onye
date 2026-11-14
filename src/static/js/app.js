@@ -10,24 +10,25 @@ let currentBundleJSON = null;
 let isAnonymized = false;
 let lastSearchResults = [];
 let lastSearchQuery = "";
+let isQueueProcessing = false;
 
 // Initialize on DOM load
 document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("search-input");
 
-  // Real-time debounced search on input
+  // Real-time debounced search on input (updates URL with replaceState)
   searchInput.addEventListener("input", () => {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
-      executeSearch();
+      executeSearch(true, true);
     }, 300);
   });
 
-  // Enter key immediate execution
+  // Enter key immediate execution (pushes state to history)
   searchInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       clearTimeout(debounceTimer);
-      executeSearch();
+      executeSearch(true, false);
     }
   });
 
@@ -71,9 +72,237 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Default query on first load to immediately showcase capabilities
-  setQuery("uncontrolled diabetes with elevated HbA1c and peripheral neuropathy");
+  // Check initial queue status
+  pollQueueStatus();
+
+  // Initialize view state from URL query parameters or default showcase query
+  initFromUrl();
 });
+
+/**
+ * Parses URL query parameters for deep linking & bookmarking.
+ * Supports:
+ *   - q / query: search query string
+ *   - type / resource_type: "DocumentReference" | "DiagnosticReport"
+ *   - from / date_from: "YYYY-MM-DD"
+ *   - to / date_to: "YYYY-MM-DD"
+ *   - patient / patient_id / id: "P-XXX"
+ *   - anonymize / anonymized / anon: "true" | "1" | "yes"
+ */
+function getUrlState() {
+  const params = new URLSearchParams(window.location.search);
+  const getParam = (...keys) => {
+    for (const k of keys) {
+      for (const [paramKey, val] of params.entries()) {
+        if (paramKey.toLowerCase() === k.toLowerCase()) {
+          return val;
+        }
+      }
+    }
+    return null;
+  };
+
+  const query = getParam("q", "query");
+  const resourceType = getParam("type", "resource_type") || "";
+  const dateFrom = getParam("from", "date_from") || "";
+  const dateTo = getParam("to", "date_to") || "";
+  const patientId = getParam("patient", "patient_id", "id");
+  const anonVal = getParam("anonymize", "anonymized", "anon");
+  const anonymize = anonVal !== null ? ["1", "true", "yes"].includes(anonVal.toLowerCase()) : null;
+
+  return {
+    query,
+    resourceType,
+    dateFrom,
+    dateTo,
+    patientId,
+    anonymize,
+    hasParams: window.location.search.length > 1,
+  };
+}
+
+/**
+ * Synchronizes current application state with the browser's address bar.
+ * Ensures URLs are bookmarkable and shareable with all search queries and filters.
+ */
+function updateUrl(replace = false) {
+  const searchInput = document.getElementById("search-input");
+  const resourceTypeEl = document.getElementById("filter-resource-type");
+  const dateFromEl = document.getElementById("filter-date-from");
+  const dateToEl = document.getElementById("filter-date-to");
+
+  const query = searchInput ? searchInput.value.trim() : "";
+  const resourceType = resourceTypeEl ? resourceTypeEl.value : "";
+  const dateFrom = dateFromEl ? dateFromEl.value : "";
+  const dateTo = dateToEl ? dateToEl.value : "";
+
+  const params = new URLSearchParams();
+  if (query) params.set("q", query);
+  if (resourceType) params.set("type", resourceType);
+  if (dateFrom) params.set("from", dateFrom);
+  if (dateTo) params.set("to", dateTo);
+  if (isAnonymized) params.set("anonymize", "true");
+  if (currentPatientId) params.set("patient", currentPatientId);
+
+  const queryString = params.toString();
+  const newUrl = queryString ? `${window.location.pathname}?${queryString}` : window.location.pathname;
+
+  const currentUrl = `${window.location.pathname}${window.location.search}`;
+  if (currentUrl === newUrl) return;
+
+  const stateObj = {
+    query,
+    resourceType,
+    dateFrom,
+    dateTo,
+    anonymized: isAnonymized,
+    patientId: currentPatientId,
+  };
+
+  if (replace) {
+    window.history.replaceState(stateObj, "", newUrl);
+  } else {
+    window.history.pushState(stateObj, "", newUrl);
+  }
+}
+
+/**
+ * Initializes frontend state from the URL query parameters on load.
+ */
+async function initFromUrl() {
+  const state = getUrlState();
+
+  // 1. Privacy / anonymization setting
+  if (state.anonymize !== null) {
+    const toggle = document.getElementById("toggle-anonymize");
+    if (toggle) {
+      toggle.checked = state.anonymize;
+      handleAnonymizationChange({ target: toggle }, false);
+    }
+  }
+
+  // 2. Filters
+  if (state.resourceType) {
+    const typeEl = document.getElementById("filter-resource-type");
+    if (typeEl) typeEl.value = state.resourceType;
+  }
+  if (state.dateFrom) {
+    const fromEl = document.getElementById("filter-date-from");
+    if (fromEl) fromEl.value = state.dateFrom;
+  }
+  if (state.dateTo) {
+    const toEl = document.getElementById("filter-date-to");
+    if (toEl) toEl.value = state.dateTo;
+  }
+
+  // 3. Open patient modal drawer if bookmarked in URL
+  if (state.patientId) {
+    currentPatientId = state.patientId;
+  }
+
+  // 4. Search query
+  const searchInput = document.getElementById("search-input");
+  let queryToRun = null;
+
+  if (state.query !== null) {
+    queryToRun = state.query;
+    if (searchInput) searchInput.value = state.query;
+  } else if (!state.hasParams) {
+    // If no URL parameters were provided at all, prefill default query to showcase capabilities
+    queryToRun = "uncontrolled diabetes with elevated HbA1c and peripheral neuropathy";
+    if (searchInput) searchInput.value = queryToRun;
+  }
+
+  if (queryToRun) {
+    await executeSearch(true, true);
+  } else {
+    updateUrl(true);
+  }
+
+  if (state.patientId) {
+    await openPatientDrawer(state.patientId, false);
+  }
+}
+
+/**
+ * Handles browser Back/Forward navigation (popstate) to restore previous view state.
+ */
+window.addEventListener("popstate", async () => {
+  const state = getUrlState();
+
+  // Sync anonymization
+  if (state.anonymize !== null) {
+    const toggle = document.getElementById("toggle-anonymize");
+    if (toggle && toggle.checked !== state.anonymize) {
+      toggle.checked = state.anonymize;
+      handleAnonymizationChange({ target: toggle }, false);
+    }
+  }
+
+  // Sync filters
+  const typeEl = document.getElementById("filter-resource-type");
+  if (typeEl) typeEl.value = state.resourceType || "";
+  const fromEl = document.getElementById("filter-date-from");
+  if (fromEl) fromEl.value = state.dateFrom || "";
+  const toEl = document.getElementById("filter-date-to");
+  if (toEl) toEl.value = state.dateTo || "";
+
+  // Sync search input & execute if changed
+  const searchInput = document.getElementById("search-input");
+  const currentVal = searchInput ? searchInput.value.trim() : "";
+  const targetVal = state.query || "";
+  if (currentVal !== targetVal || lastSearchQuery !== targetVal) {
+    if (searchInput) searchInput.value = targetVal;
+    await executeSearch(false);
+  }
+
+  // Sync drawer
+  if (state.patientId) {
+    if (currentPatientId !== state.patientId) {
+      openPatientDrawer(state.patientId, false);
+    }
+  } else {
+    if (currentPatientId) {
+      closeDrawer(false);
+    }
+  }
+});
+
+/**
+ * Copies the current bookmarkable URL to the user's clipboard.
+ */
+function copyBookmarkUrl() {
+  const url = window.location.href;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(
+      () => {
+        showToast("Bookmarkable URL copied to clipboard!");
+      },
+      () => {
+        fallbackCopyText(url);
+      }
+    );
+  } else {
+    fallbackCopyText(url);
+  }
+}
+
+function fallbackCopyText(text) {
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  textArea.style.position = "fixed";
+  textArea.style.left = "-9999px";
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    document.execCommand("copy");
+    showToast("Bookmarkable URL copied to clipboard!");
+  } catch (err) {
+    showToast("Current URL: " + window.location.search);
+  }
+  document.body.removeChild(textArea);
+}
 
 function toggleAnonymization() {
   const checkbox = document.getElementById("toggle-anonymize");
@@ -83,18 +312,22 @@ function toggleAnonymization() {
   }
 }
 
-function handleAnonymizationChange(event) {
+function handleAnonymizationChange(event, updateHistory = true) {
   isAnonymized = event.target.checked;
   const label = document.getElementById("anonymize-label");
   const container = document.getElementById("anonymize-container");
   if (isAnonymized) {
-    if (label) label.innerText = "PHI Masked";
+    if (label) label.innerText = "Names Hidden";
     if (container) container.classList.add("bg-indigo-50", "border-indigo-400");
-    showToast("Patient data presentation anonymized (HIPAA Safe Harbor).");
+    showToast("Patient names and identifying details are now hidden.");
   } else {
-    if (label) label.innerText = "Anonymize PHI";
+    if (label) label.innerText = "Hide Names & Details";
     if (container) container.classList.remove("bg-indigo-50", "border-indigo-400");
-    showToast("Original patient identifiers restored in presentation.");
+    showToast("Patient names and details restored.");
+  }
+
+  if (updateHistory) {
+    updateUrl(false);
   }
 
   // Re-render search results
@@ -110,7 +343,7 @@ function handleAnonymizationChange(event) {
 
 function anonymizeName(name, patientId) {
   if (!isAnonymized) return name;
-  return `Patient [${patientId}] (De-identified)`;
+  return `Patient [${patientId}] (Hidden)`;
 }
 
 function anonymizeMRN(mrn) {
@@ -168,36 +401,110 @@ function highlightQuery(text, query) {
   return escaped.replace(regex, '<mark class="bg-amber-200 text-amber-900 rounded px-1 py-0.5 font-medium">$1</mark>');
 }
 
+let queuePollInterval = null;
+
 function showIngestionProgress(title = "Processing clinical records...") {
   const panel = document.getElementById("ingestion-stats-panel");
   const progressBar = document.getElementById("ingestion-progress-bar");
-  const progressText = document.getElementById("progress-text");
+  const statsMessage = document.getElementById("stats-message");
+  const dot = document.getElementById("queue-status-dot");
   if (panel) panel.classList.remove("hidden");
   if (progressBar) progressBar.classList.remove("hidden");
-  if (progressText) progressText.innerText = title;
+  if (statsMessage) statsMessage.innerText = title;
+  if (dot) dot.className = "w-2 h-2 rounded-full bg-amber-500 animate-pulse inline-block flex-shrink-0";
+}
+
+function startQueuePolling() {
+  isQueueProcessing = true;
+  if (queuePollInterval) clearInterval(queuePollInterval);
+  pollQueueStatus();
+  queuePollInterval = setInterval(pollQueueStatus, 800);
+}
+
+function stopQueuePolling() {
+  if (queuePollInterval) {
+    clearInterval(queuePollInterval);
+    queuePollInterval = null;
+  }
+}
+
+async function pollQueueStatus() {
+  try {
+    const resp = await fetch("/queue/status");
+    if (!resp.ok) return;
+    const stats = await resp.json();
+    renderIngestionStats(stats);
+
+    if (!stats.is_active) {
+      stopQueuePolling();
+      const btn = document.getElementById("btn-reingest");
+      const spinner = document.getElementById("ingest-spinner");
+      const icon = document.getElementById("ingest-icon");
+      if (btn) btn.disabled = false;
+      if (spinner) spinner.classList.add("hidden");
+      if (icon) icon.classList.remove("hidden");
+      if (isQueueProcessing) {
+        isQueueProcessing = false;
+        executeSearch(false);
+      }
+    }
+  } catch (err) {
+    console.error("Queue poll error:", err);
+  }
 }
 
 function renderIngestionStats(stats) {
   const panel = document.getElementById("ingestion-stats-panel");
   const progressBar = document.getElementById("ingestion-progress-bar");
+  const dot = document.getElementById("queue-status-dot");
+
   if (panel) panel.classList.remove("hidden");
-  if (progressBar) progressBar.classList.add("hidden");
 
-  document.getElementById("stat-total").innerText = stats.total_ingested ?? 0;
-  document.getElementById("stat-successful").innerText = stats.successful ?? 0;
-  document.getElementById("stat-failed").innerText = stats.failed ?? 0;
-  document.getElementById("stat-duplicates").innerText = stats.skipped_duplicates ?? 0;
+  // Show progress bar if queue is actively processing
+  if (stats.is_active) {
+    if (progressBar) progressBar.classList.remove("hidden");
+    if (dot) dot.className = "w-2 h-2 rounded-full bg-amber-500 animate-pulse inline-block flex-shrink-0";
+  } else {
+    if (progressBar) progressBar.classList.add("hidden");
+    if (dot) dot.className = "w-2 h-2 rounded-full bg-emerald-500 inline-block flex-shrink-0";
+  }
 
-  document.getElementById("stats-message").innerText = stats.message || "Ingestion complete.";
-  document.getElementById("stats-indices").innerText = `Bundles: ${stats.bundles_stored ?? 0} · Vectors: ${stats.vectors_indexed ?? 0}`;
+  const setVal = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.innerText = val ?? 0;
+  };
+
+  setVal("stat-unprocessed", stats.unprocessed);
+  setVal("stat-in-processing", stats.in_processing);
+  setVal("stat-successful", stats.successful);
+  setVal("stat-duplicates", stats.skipped_duplicates);
+  setVal("stat-failed", stats.failed);
+  setVal("stat-total", stats.total_ingested);
+
+  // Update progress bar
+  const pct = Math.min(100, Math.max(0, stats.progress_percent || 0));
+  const fillEl = document.getElementById("progress-bar-fill");
+  const pctEl = document.getElementById("progress-pct");
+  const textEl = document.getElementById("progress-text");
+
+  if (fillEl) fillEl.style.width = `${pct}%`;
+  if (pctEl) pctEl.innerText = `${pct}%`;
+  if (textEl) {
+    textEl.innerText = stats.current_file ? `Processing ${stats.current_file}...` : (stats.message || "Processing...");
+  }
+
+  const msgEl = document.getElementById("stats-message");
+  if (msgEl) msgEl.innerText = stats.message || "Ingestion queue idle. Ready for queries.";
 
   const failuresBox = document.getElementById("failures-box");
   const failuresList = document.getElementById("failures-list");
-  if (stats.failed > 0 && stats.failures && stats.failures.length > 0) {
-    failuresBox.classList.remove("hidden");
-    failuresList.innerHTML = stats.failures.map((f) => `<p class="font-mono">• ${escapeHtml(f)}</p>`).join("");
-  } else {
-    failuresBox.classList.add("hidden");
+  if (failuresBox && failuresList) {
+    if (stats.failed > 0 && stats.failures && stats.failures.length > 0) {
+      failuresBox.classList.remove("hidden");
+      failuresList.innerHTML = stats.failures.map((f) => `<span class="mr-2 font-mono">• ${escapeHtml(f)}</span>`).join("");
+    } else {
+      failuresBox.classList.add("hidden");
+    }
   }
 }
 
@@ -251,8 +558,8 @@ async function uploadFiles(fileList) {
 
     const res = await resp.json();
     renderIngestionStats(res);
-    showToast(`Ingestion complete! ${res.successful} successful, ${res.failed} failed, ${res.skipped_duplicates} duplicate(s) skipped.`);
-    executeSearch();
+    showToast(`Uploaded ${res.files_uploaded || count} file(s) into queue. Processing in background.`);
+    startQueuePolling();
   } catch (err) {
     showToast(`Upload error: ${err.message}`);
   } finally {
@@ -268,22 +575,26 @@ function setQuery(text) {
   const input = document.getElementById("search-input");
   input.value = text;
   input.focus();
-  executeSearch();
+  executeSearch(true, false);
 }
 
 function resetFilters() {
   document.getElementById("filter-resource-type").value = "";
   document.getElementById("filter-date-from").value = "";
   document.getElementById("filter-date-to").value = "";
-  executeSearch();
+  executeSearch(true, false);
   showToast("Filters reset to default.");
 }
 
-async function executeSearch() {
+async function executeSearch(updateHistory = true, replaceHistory = false) {
   const query = document.getElementById("search-input").value.trim();
   const resourceType = document.getElementById("filter-resource-type").value;
   const dateFrom = document.getElementById("filter-date-from").value;
   const dateTo = document.getElementById("filter-date-to").value;
+
+  if (updateHistory) {
+    updateUrl(replaceHistory);
+  }
 
   const initialState = document.getElementById("initial-state");
   const loading = document.getElementById("loading-skeletons");
@@ -306,7 +617,7 @@ async function executeSearch() {
   if (initialState) initialState.classList.add("hidden");
   loading.classList.remove("hidden");
   resultsList.innerHTML = "";
-  matchSummary.innerText = "Searching clinical vector database...";
+  matchSummary.innerText = "Searching patient records...";
   latencyBadge.classList.add("hidden");
 
   try {
@@ -338,17 +649,17 @@ async function executeSearch() {
     lastSearchResults = data.results || [];
 
     if (lastSearchResults.length === 0) {
-      matchSummary.innerText = "No clinical matches found for the current query and filters.";
+      matchSummary.innerText = "No matching records found for your search.";
       resultsList.innerHTML = `
         <div class="text-center py-10 bg-white rounded-xl border border-slate-200 p-6">
           <p class="text-sm font-semibold text-slate-700">No records matched your criteria.</p>
-          <p class="text-xs text-slate-500 mt-1">Try broadening your search terms or clearing the resource type and date filters.</p>
+          <p class="text-xs text-slate-500 mt-1">Try broadening your search terms or clearing the record type and date filters.</p>
         </div>
       `;
       return;
     }
 
-    matchSummary.innerText = `Top ${lastSearchResults.length} ranked matches across EHR records`;
+    matchSummary.innerText = `Top ${lastSearchResults.length} matching patient records`;
     renderSearchResults(lastSearchResults, query);
   } catch (err) {
     loading.classList.add("hidden");
@@ -413,7 +724,7 @@ function renderSearchResults(results, query) {
         <div>
           <h4 class="text-xs font-bold text-slate-800">${displayTitle}</h4>
           <p class="text-xs text-slate-600 mt-1 leading-relaxed bg-slate-50/80 p-2 rounded border border-slate-100">
-            <span class="font-semibold text-indigo-700">Clinical Summary:</span> ${displaySummary}
+            <span class="font-semibold text-indigo-700">Summary:</span> ${displaySummary}
           </p>
         </div>
 
@@ -423,7 +734,7 @@ function renderSearchResults(results, query) {
         </p>
 
         <div class="flex items-center justify-between pt-1 border-t border-slate-100 text-[11px]">
-          <span class="text-slate-400">Click card or press Enter to inspect full patient file</span>
+          <span class="text-slate-400">Click to open full patient file</span>
           <span class="text-indigo-600 font-semibold flex items-center hover:text-indigo-800">
             View Patient Record &rarr;
           </span>
@@ -434,16 +745,20 @@ function renderSearchResults(results, query) {
     .join("");
 }
 
-async function openPatientDrawer(patientId) {
+async function openPatientDrawer(patientId, updateHistory = true) {
   currentPatientId = patientId;
   const drawer = document.getElementById("patient-drawer");
   drawer.classList.remove("hidden");
+
+  if (updateHistory) {
+    updateUrl(false);
+  }
 
   // Reset fields
   document.getElementById("drawer-patient-name").innerText = "Loading...";
   document.getElementById("drawer-mrn-badge").innerText = "";
   document.getElementById("drawer-demographics").innerText = "";
-  document.getElementById("drawer-chief-concern").innerText = "Loading clinical summary...";
+  document.getElementById("drawer-chief-concern").innerText = "Loading summary...";
   document.getElementById("drawer-diagnoses-list").innerHTML = "";
   document.getElementById("drawer-anomalies-list").innerHTML = "";
   document.getElementById("drawer-full-narrative").innerText = "";
@@ -454,7 +769,7 @@ async function openPatientDrawer(patientId) {
 
   try {
     const resp = await fetch(`/patients/${encodeURIComponent(patientId)}`);
-    if (!resp.ok) throw new Error("Failed to load patient dossier");
+    if (!resp.ok) throw new Error("Failed to load patient record");
     const p = await resp.json();
     currentPatientData = p;
 
@@ -468,7 +783,7 @@ async function openPatientDrawer(patientId) {
       renderRawFHIR();
     }
   } catch (err) {
-    showToast(`Error loading dossier: ${err.message}`);
+    showToast(`Error loading record: ${err.message}`);
   }
 }
 
@@ -598,11 +913,14 @@ function renderRawFHIR() {
   }
 }
 
-function closeDrawer() {
+function closeDrawer(updateHistory = true) {
   document.getElementById("patient-drawer").classList.add("hidden");
   currentPatientId = null;
   currentPatientData = null;
   currentBundleJSON = null;
+  if (updateHistory) {
+    updateUrl(false);
+  }
 }
 
 function toggleRawFHIR() {
@@ -627,7 +945,7 @@ async function triggerIngest() {
   icon.classList.add("hidden");
   btn.disabled = true;
 
-  showIngestionProgress("Scanning directory & rebuilding FHIR indexes...");
+  showIngestionProgress("Enqueuing directory records...");
 
   try {
     const resp = await fetch("/ingest", { method: "POST" });
@@ -636,14 +954,48 @@ async function triggerIngest() {
     }
     const res = await resp.json();
     renderIngestionStats(res);
-    showToast(`Ingestion complete! ${res.successful} successful, ${res.failed} failed, ${res.skipped_duplicates} duplicate(s) skipped.`);
-    executeSearch();
+    showToast("Directory records enqueued! Processing in background.");
+    startQueuePolling();
   } catch (err) {
     showToast(`Ingestion error: ${err.message}`);
-  } finally {
     spinner.classList.add("hidden");
     icon.classList.remove("hidden");
     btn.disabled = false;
+  }
+}
+
+async function clearAllData() {
+  if (!confirm("Are you sure you want to clear all indexed patient data, FHIR bundles, summaries, and vector indexes?")) {
+    return;
+  }
+
+  stopQueuePolling();
+
+  try {
+    const resp = await fetch("/clear", { method: "POST" });
+    if (!resp.ok) {
+      throw new Error(`Failed with HTTP ${resp.status}`);
+    }
+    const res = await resp.json();
+    renderIngestionStats(res);
+
+    // Clear search UI
+    lastSearchResults = [];
+    renderSearchResults([], "");
+    const countEl = document.getElementById("results-count");
+    if (countEl) countEl.innerText = "0 matches";
+    const latencyEl = document.getElementById("search-latency");
+    if (latencyEl) latencyEl.innerText = "";
+    const searchInput = document.getElementById("search-input");
+    if (searchInput) searchInput.value = "";
+    currentPatientId = null;
+    closeDrawer(false);
+    const newUrl = window.location.pathname;
+    window.history.pushState({}, "", newUrl);
+
+    showToast("All clinical records, FHIR bundles, and vector embeddings cleared.");
+  } catch (err) {
+    showToast(`Error clearing data: ${err.message}`);
   }
 }
 

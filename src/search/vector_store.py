@@ -39,6 +39,18 @@ class ClinicalVectorStore:
     def count(self) -> int:
         return self.collection.count()
 
+    def clear(self) -> None:
+        """Purge all indexed vectors from the ChromaDB collection."""
+        coll_name = self.collection.name
+        try:
+            self.client.delete_collection(name=coll_name)
+        except Exception:
+            pass
+        self.collection = self.client.get_or_create_collection(
+            name=coll_name,
+            metadata={"hnsw:space": "cosine"},
+        )
+
     @staticmethod
     def _date_to_int(date_str: str) -> int:
         """Convert YYYY-MM-DD string to integer YYYYMMDD for ChromaDB numerical range filtering."""
@@ -108,13 +120,30 @@ class ClinicalVectorStore:
         # Generate embeddings in batch
         embeddings = self.embedding_engine.embed_batch(documents)
 
-        # Upsert into ChromaDB
-        self.collection.upsert(
-            ids=ids,
-            embeddings=embeddings,
-            documents=documents,
-            metadatas=metadatas,
-        )
+        # Upsert into ChromaDB with self-healing retry on stale file handles (e.g. after git checkout)
+        try:
+            self.collection.upsert(
+                ids=ids,
+                embeddings=embeddings,
+                documents=documents,
+                metadatas=metadatas,
+            )
+        except Exception as e:
+            if "readonly database" in str(e).lower() or "disk i/o error" in str(e).lower():
+                persist_path = Path(settings.CHROMA_PERSIST_DIR)
+                self.client = chromadb.PersistentClient(path=str(persist_path))
+                self.collection = self.client.get_or_create_collection(
+                    name=self.collection.name,
+                    metadata={"hnsw:space": "cosine"},
+                )
+                self.collection.upsert(
+                    ids=ids,
+                    embeddings=embeddings,
+                    documents=documents,
+                    metadatas=metadatas,
+                )
+            else:
+                raise
         return len(ids)
 
     def search(self, request: SearchRequest) -> SearchResponse:

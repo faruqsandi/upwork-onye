@@ -125,3 +125,9 @@ class FHIRSQLiteStorage:
             cursor = conn.cursor()
             cursor.execute("SELECT COUNT(*) FROM fhir_bundles;")
             return cursor.fetchone()[0]
+
+    def clear(self) -> None:
+        """Purge all stored bundles."""
+        with self._get_connection() as conn:
+            conn.execute("DELETE FROM fhir_bundles;")
+            conn.commit()
